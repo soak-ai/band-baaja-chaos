@@ -65,10 +65,10 @@ export default function CardRow({ row, selected, onSelect }) {
             if (row.key === 'theme') {
               const rect = e.currentTarget.getBoundingClientRect()
               const cardCenterX = rect.left + rect.width / 2
-              const cardTopY = rect.top + 12 // Inside card padding + 2px breathing space
+              const aboveCardY = rect.top - 2 // ABOVE card border, 2px breathing space
 
               const floatId = `${card.id}-${Date.now()}`
-              setFloatingPrices(prev => [...prev, { id: floatId, x: cardCenterX, y: cardTopY, price: card.price }])
+              setFloatingPrices(prev => [...prev, { id: floatId, x: cardCenterX, y: aboveCardY, price: card.price }])
               setTimeout(() => {
                 setFloatingPrices(prev => prev.filter(f => f.id !== floatId))
               }, 2000)
