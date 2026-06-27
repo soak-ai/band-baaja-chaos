@@ -673,7 +673,7 @@ button {
   left: var(--start-x);
   top: var(--start-y);
   transform: translateX(-50%) translateY(-50%);
-  animation: price-float 2s ease-out forwards;
+  animation: price-float 0.75s ease-out forwards;
 }
 
 @keyframes price-float {
