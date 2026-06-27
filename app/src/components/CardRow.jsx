@@ -73,9 +73,6 @@ export default function CardRow({ row, selected, onSelect }) {
                 setFloatingPrices(prev => prev.filter(f => f.id !== floatId))
               }, 1500)
             }
-            setTimeout(() => {
-              setFloatingPrices(prev => prev.filter(f => f.id !== floatId))
-            }, 1000)
 
             if (veiled) {
               if (isVeiled) {
