@@ -1,0 +1,1250 @@
+/* ---- design tokens ---- */
+:root {
+  --cream: #FFF9F0;
+  --marigold: #F5A623;
+  --coral: #E87060;
+  --gold: #D4AF37;
+  --ink: #1A1A1A;
+
+  --display: 'Rozha One', serif;
+  --body: 'Bricolage Grotesque', system-ui, sans-serif;
+
+  --radius: 16px;
+  --shadow: 0 4px 18px rgba(26, 26, 26, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  overflow-x: hidden; /* never allow horizontal scroll / doubled layouts */
+}
+
+/* mobile-first; desktop = centered column */
+.frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  overflow-x: hidden;
+  isolation: isolate; /* clean stacking context — no cross-layer ghosting */
+}
+
+
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  /* each new screen eases up gently from the bottom */
+  animation: screen-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+  font-family: var(--body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ---- buttons (lowercase microcopy) ---- */
+.btn {
+  text-transform: lowercase;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 15px 36px;
+  border-radius: 999px;
+  transition: transform 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--coral);
+  color: var(--cream);
+  box-shadow: var(--shadow);
+}
+
+/* secondary / ghost — used for low-priority actions like "start over" */
+.btn-secondary {
+  background: transparent;
+  color: rgba(26, 26, 26, 0.5);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 12px 24px;
+}
+
+/* ---- splash ---- */
+.splash {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* full-bleed image (wordmark + tagline are baked in); fades out for loading */
+.splash-stage {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.6s ease;
+}
+
+.splash-stage.is-hidden {
+  opacity: 0;
+}
+
+/* fully static — no pulsing on the image or the baked wordmark */
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--cream) url('/assets/splash-bg.png') center / cover no-repeat;
+}
+
+/* square box centred on the ring; dots sit on its inscribed circle */
+.splash-ring {
+  position: absolute;
+  top: 41%;
+  left: 50%;
+  width: 64%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+/* only these bulbs animate — soft golden glows twinkling on/off, staggered,
+   with a slow breathing drift so the ring feels alive and a little hypnotic */
+.splash-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 248, 224, 1), rgba(255, 204, 110, 0.6) 42%, transparent 70%);
+  mix-blend-mode: screen;
+  animation: dot-twinkle 1.9s ease-in-out infinite;
+}
+
+@keyframes dot-twinkle {
+  0% { opacity: 0.12; transform: scale(0.72); }
+  45% { opacity: 1; transform: scale(1.25); }
+  60% { opacity: 0.9; transform: scale(1.1); }
+  100% { opacity: 0.12; transform: scale(0.72); }
+}
+
+/* loading screen fades in over the splash image */
+.splash-loading {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  animation: caption-in 0.5s ease both;
+}
+
+/* static coral arc — frozen mid-arc, reads as paused not spinning */
+.splash-spinner {
+  width: 40px;
+  height: 40px;
+  opacity: 0.85;
+}
+
+.microline {
+  font-size: 13px;
+  color: rgba(26, 26, 26, 0.55);
+  letter-spacing: 0.02em;
+}
+
+/* center-focused glow that pulses around the baked wordmark — feels alive, not swept */
+.splash-sheen {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  width: 72%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 240, 180, 0.32) 0%, rgba(255, 200, 100, 0.14) 45%, transparent 72%);
+  animation: splash-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes splash-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.6; }
+  50%       { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
+}
+
+/* ---- home ---- */
+.home {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  padding: 110px 24px 24px;
+  text-align: center;
+}
+
+
+/* home gently dissolves upward as level 1 eases in — a calm hand-off */
+.home-leaving {
+  animation: home-leave 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes home-leave {
+  to { opacity: 0; transform: translateY(-16px); }
+}
+
+/* warm glow behind the headline — layered for depth, parallax-driven by JS */
+.home-glow {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+  width: 160%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle,
+    rgba(245, 166, 35, 0.28) 0%,
+    rgba(255, 184, 77, 0.13) 40%,
+    transparent 66%
+  );
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+/* secondary deeper glow for layered parallax */
+.home-glow::after {
+  content: '';
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 80, 0.18) 0%, transparent 70%);
+  animation: home-glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes home-glow-pulse {
+  0%, 100% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+/* faint marigold motifs in corners for warmth — mirrors the final card style */
+.home-motif {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: url('/assets/marigold-orange.png') center / contain no-repeat;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.home-motif-tr {
+  top: -20px;
+  right: -20px;
+  transform: rotate(15deg);
+}
+
+.home-motif-bl {
+  bottom: 80px;
+  left: -24px;
+  transform: rotate(-20deg);
+}
+
+/* festive marigold + lights garland — bottom-fade draws the eye downward to the headline */
+.home-garland-wrap {
+  width: calc(100% + 48px);
+  margin: 0 -24px;
+  animation: garland-sway 6s ease-in-out infinite;
+  transform-origin: top center;
+  -webkit-mask-image: linear-gradient(to bottom, black 48%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 48%, transparent 100%);
+}
+
+@keyframes garland-sway {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(2px); }
+}
+
+.garland {
+  display: block;
+  width: 100%;
+  height: 150px;
+  overflow: visible;
+}
+
+.garland-string {
+  stroke: #b88a3c;
+  stroke-width: 1.4;
+  opacity: 0.6;
+}
+
+.strand-1 .garland-string {
+  opacity: 0.5;
+}
+
+.lightdot {
+  fill: #FFE6A6;
+  filter: drop-shadow(0 0 2.6px rgba(255, 206, 110, 0.95));
+  animation: lightdot-twinkle 1.6s ease-in-out infinite;
+}
+
+.marigold {
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.55));
+}
+
+@keyframes lightdot-twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* hero block — headline + subline as one cohesive centred group */
+.home-hero {
+  position: relative;
+  z-index: 1; /* above fairy-wrap */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: -48px;
+}
+
+/* hero headline — gently curved 3-line statement, bleeds slightly wider so the
+   text-on-path reads large and bold */
+.home-headline-wrap {
+  position: relative;
+  width: calc(100% + 36px);
+  margin: 0 -18px;
+}
+
+.arch {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.arch-text {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 48px;
+  fill: var(--coral);
+}
+
+/* a few gold sparkles, breathing softly (never fully off — not blinky) */
+.home-spark {
+  position: absolute;
+  z-index: 2;
+  filter: drop-shadow(0 0 3px rgba(240, 209, 101, 0.5));
+  animation: home-spark-glow 3.4s ease-in-out infinite;
+}
+
+@keyframes home-spark-glow {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* fairy-light arch spanning the top — single catenary draped across full width */
+.home-fairy-wrap {
+  position: absolute;
+  top: -60px;
+  left: -24px;
+  right: -24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fairy-arch {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.9;
+  animation: fairy-bulb-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes fairy-bulb-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 217, 125, 0.45)); }
+  50%       { filter: drop-shadow(0 0 10px rgba(255, 217, 125, 0.85)); }
+}
+
+/* subline — four stacked lines, sits comfortably between hero and button */
+.home-subline {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: rgba(26, 26, 26, 0.55);
+}
+
+
+/* ---- levels ---- */
+.level {
+  padding-bottom: 110px; /* room for pinned burn meter */
+}
+
+.level-header {
+  margin-top: 44px; /* clear the pinned mute toggle */
+  margin-bottom: 30px; /* 28-32px gap before first section header */
+}
+
+/* proper heading: small gold kicker sitting above a dominant Rozha title */
+.level-title {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.level-kicker {
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1;
+  margin-left: 0 !important;
+}
+
+/* the dash is dropped in the stacked layout */
+.level-dash {
+  display: none;
+}
+
+/* level name — Rozha One, large, coral — clearly the heading */
+.level-name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1;
+  color: var(--coral);
+  margin-left: 0 !important;
+}
+
+/* level subline — inside level-title flex, so gap:5px controls spacing */
+.level-brief {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: rgba(26, 26, 26, 0.42);
+}
+
+/* 24px gap between category blocks + thin soft-gold divider */
+.row {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.row:last-of-type {
+  border-bottom: none;
+}
+
+/* category label — dark ink, 18px/600 to sit above card names (15px/500) */
+.row-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+
+.row-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  /* full-bleed scroll: reaches the screen edges but keeps a 20px content inset
+     so the first card is never clipped and scaled cards can breathe */
+  margin: 0 -20px;
+  padding: 6px 20px 10px;
+  scroll-padding-left: 20px;
+}
+
+.row-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* every card — illustrated, numeric, or type — is the exact same width:
+   2 fully visible + ~40% peek of the third */
+.art-card,
+.card {
+  flex: 0 0 calc((100% - 24px) / 2.4);
+  scroll-snap-align: start;
+}
+
+/* ---- illustrated + numeric cards: one shared shell, identical dimensions ---- */
+.art-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  animation: card-rise 0.4s ease both;
+  animation-delay: calc(var(--i) * 40ms); /* staggered entrance */
+}
+
+.art-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #FFFDF7; /* uniform off-white card surface across every category */
+  border: 1px solid rgba(212, 175, 55, 0.2); /* gentle warm-gold edge on every card */
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(26, 26, 26, 0.08);
+  overflow: hidden;
+  padding: 10px;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+/* quick press-down before settling */
+.art-card:active .art-card-media {
+  transform: scale(0.97);
+}
+
+/* the illustration fills the card so its own backdrop *is* the card surface
+   (no inner box); scaled up a touch so the artwork reads larger and bolder. */
+/* illustration sits centred on the uniform off-white tile with padding */
+.card-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(var(--art-scale, 1.05));
+  mix-blend-mode: multiply; /* blends any slight backdrop tint into the off-white */
+}
+
+/* clean placeholder for any missing illustration */
+.card-img-empty {
+  width: 100%;
+  height: 100%;
+}
+
+/* guest list: big Rozha numerals on a warm watercolour-washed tile */
+.art-card-num {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-size: clamp(22px, 7vw, 30px);
+  color: var(--ink);
+  /* soft warm wash so the number tiles feel like cards, not plain boxes */
+  background:
+    radial-gradient(circle at 50% 42%, rgba(245, 166, 35, 0.16), transparent 58%),
+    radial-gradient(circle at 78% 80%, rgba(255, 77, 77, 0.08), transparent 55%),
+    linear-gradient(180deg, #FFFDF7, #FFF4E2);
+}
+
+/* selection = single crisp soft-gold outline, no tick, no second line */
+.art-card-selected .art-card-media {
+  border: 2px solid var(--gold);
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- wildcard draped veil (coral fabric + ?), curtain-rises on first tap ---- */
+.card-drape {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(var(--radius) - 1px);
+  /* warm coral fabric brushed with gold — coherent with the app's coral + gold palette */
+  background:
+    repeating-linear-gradient(125deg, rgba(255, 246, 230, 0.12) 0 9px, rgba(150, 70, 40, 0.05) 9px 18px),
+    radial-gradient(circle at 74% 18%, rgba(245, 198, 100, 0.42), transparent 50%),
+    radial-gradient(circle at 24% 90%, rgba(212, 175, 55, 0.30), transparent 55%),
+    linear-gradient(150deg, #F9A98E 0%, #F2795A 50%, #C4552C 100%);
+    /* warm reveal: opacity + slight scale so the drape has physical weight, not a flat pop */
+  transition: opacity var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1)),
+              transform var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
+  cursor: pointer;
+  will-change: opacity, transform;
+  transform: scale(1);
+}
+
+.card-drape-q {
+  font-family: var(--display);
+  font-size: 36px;
+  color: #FFF6EE;
+  text-shadow: 0 1px 3px rgba(120, 40, 60, 0.35);
+  animation: drape-q-breathe 2.8s ease-in-out infinite;
+}
+
+@keyframes drape-q-breathe {
+  0%, 100% { transform: scale(1);    opacity: 0.75; }
+  50%       { transform: scale(1.10); opacity: 1;    }
+}
+
+/* one-time "tap to peek" whisper — sits inline after the row title */
+.wildcard-hint {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: rgba(26, 26, 26, 0.38);
+  font-family: var(--body);
+  text-transform: none;
+  animation: caption-in 0.5s ease 0.4s both;
+}
+
+/* drape lifts — fades with a gentle scale-back, like fabric being softly drawn away */
+.card-drape-lifted {
+  opacity: 0;
+  transform: scale(0.93);
+  pointer-events: none;
+}
+
+/* card name — Bricolage Grotesque, 15px, weight 500 */
+.art-card-name {
+  text-align: center;
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  min-height: 19px; /* reserved even when empty (numerals) so heights match */
+  line-height: 19px;
+  margin-top: 8px;
+}
+
+/* guest (numeral) cards have no name text — tighten the gap to the caption */
+.art-card-name:empty {
+  min-height: 0;
+  margin-top: 2px;
+}
+
+/* caption sits directly under THIS card's name — centred, wraps to 3 lines,
+   never wider than the card. Space is reserved so selecting causes no shift. */
+.art-card-caption {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  width: 100%;
+  min-height: 30px;
+  margin-top: 3px;
+  text-align: center;
+  font-family: var(--body);
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.25;
+  color: #b08a82;
+}
+
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Level 2 type tiles (no art yet) ---- */
+.card {
+  background: #FFFDF7;
+  border: 0 solid transparent;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(26, 26, 26, 0.08);
+  padding: 22px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s ease;
+}
+
+.card-selected {
+  border: 2px solid var(--gold); /* single crisp soft-gold outline */
+  transform: scale(1.045);
+}
+
+/* card name — Bricolage Grotesque, 15px, weight 500 */
+.card-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@keyframes caption-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- continue button: fills as rows complete ---- */
+.continue-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+/* True iOS-style glassmorphism — translucent + blur(16px) in BOTH states,
+   1px semi-transparent white top border, inner highlight. Never a solid fill.
+   Inactive: very translucent + dim. Active: gold-tinted glass + soft glow. */
+.glass-btn {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  padding: 16px 36px;
+  border-radius: 999px;
+  font-size: 17px;
+  font-weight: 600;
+  text-transform: lowercase;
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-top-color: rgba(255, 255, 255, 0.7); /* brighter top edge */
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.12),
+    0 4px 14px rgba(26, 26, 26, 0.05);
+  color: rgba(26, 26, 26, 0.38);
+  opacity: 0.65;
+  cursor: default;
+  transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease,
+    box-shadow 0.3s ease, border-color 0.3s ease, transform 0.15s ease;
+}
+
+/* one button language: coral pill everywhere (enabled state) */
+.glass-btn-ready {
+  background: rgba(232, 112, 96, 0.92);
+  border-color: rgba(255, 200, 190, 0.5);
+  border-top-color: rgba(255, 220, 210, 0.75);
+  color: #FFF9F0;
+  opacity: 1;
+  cursor: pointer;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 3px rgba(180, 50, 30, 0.2),
+    0 0 0 1px rgba(232, 112, 96, 0.28),
+    0 6px 20px rgba(232, 112, 96, 0.30);
+}
+
+/* the home CTA: pinned to bottom thumb zone + breathing glow */
+.home-cta {
+  position: absolute;
+  bottom: calc(44px + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: calc(100% - 48px);
+  animation: cta-breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes cta-breathe {
+  0%, 100% { box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 3px rgba(180, 50, 30, 0.2),
+    0 0 0 1px rgba(232, 112, 96, 0.25),
+    0 5px 16px rgba(232, 112, 96, 0.30); }
+  50% { box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 3px rgba(180, 50, 30, 0.2),
+    0 0 0 1px rgba(232, 112, 96, 0.35),
+    0 8px 24px rgba(232, 112, 96, 0.42); }
+}
+
+.glass-btn-ready:active {
+  transform: scale(0.985);
+}
+
+/* deliberate press-down (in) → release handled by removing the class (out) */
+.glass-btn.pressing {
+  transform: scale(0.975);
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-btn:not(.pressing) {
+  transition: opacity 0.3s ease, background 0.3s ease, color 0.3s ease,
+    box-shadow 0.3s ease, border-color 0.3s ease, transform 0.12s ease-out;
+}
+
+.pop {
+  animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
+/* ---- burn meter (pinned, levels 1–2) ---- */
+.burn-meter {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  padding: 20px 20px calc(14px + env(safe-area-inset-bottom));
+  background: rgba(255, 246, 230, 0.3);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  z-index: 10;
+}
+
+.burn-track {
+  position: relative;
+  height: 9px;
+  border-radius: 5px;
+  background: #EFE7DB; /* cool, un-reached track */
+}
+
+.burn-heat {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  background: linear-gradient(to right, #ffd34d, var(--marigold) 50%, var(--coral));
+  opacity: 0.95;
+}
+
+/* dims the track to the right of the marker so heat grows as the total climbs */
+.burn-cool {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 0 5px 5px 0;
+  background: #EFE7DB;
+  transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* tick marks along the track */
+.burn-ticks {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3px;
+}
+
+.burn-tick {
+  width: 1px;
+  height: 4px;
+  border-radius: 1px;
+  background: rgba(26, 26, 26, 0.18);
+}
+
+/* folded ₹500 note + flame marker, slides along the track */
+.burn-marker {
+  position: absolute;
+  bottom: -8px;
+  width: 40px;
+  height: 40px;
+  transform: translateX(-50%);
+  transition: left 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+/* wrapper positions note + flame together as one unit */
+.burn-note-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* the folded ₹500 note photo */
+.burn-note {
+  display: block;
+  width: 40px;
+  height: auto;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.22));
+}
+
+/* flame anchored to top-left corner of the note image */
+.burn-flame-svg {
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+}
+
+.burn-flame {
+  transform-origin: 20px 24px;
+  animation: flame-flicker 0.9s ease-in-out infinite;
+}
+
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1, 1); opacity: 0.92; }
+  50% { transform: scale(1.08, 1.16); opacity: 1; }
+}
+
+/* tiny glints twinkling around the flame, slightly staggered */
+.spark {
+  transform-origin: center;
+  animation: spark-twinkle 1.3s ease-in-out infinite;
+}
+
+.spark-1 { animation-delay: 0s; }
+.spark-2 { animation-delay: 0.45s; }
+.spark-3 { animation-delay: 0.85s; }
+
+@keyframes spark-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.4); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* brief flare-up when the total changes */
+.burn-marker.flare .burn-flame {
+  animation: flame-flare 0.45s ease;
+}
+
+@keyframes flame-flare {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.55, 1.7); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.burn-amount {
+  margin-top: 8px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: rgba(26, 26, 26, 0.7);
+}
+
+/* ---- transition ---- */
+.transition {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  transition: opacity 0.6s ease;
+}
+
+/* ambient glow behind the transition text — echoes the home screen warmth */
+.transition-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(245, 166, 35, 0.22) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(232, 112, 96, 0.10) 0%, transparent 65%);
+  animation: ambient-drift 6s ease-in-out infinite;
+}
+
+@keyframes ambient-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(3%, -4%) scale(1.05); }
+  66%       { transform: translate(-3%, 3%) scale(0.96); }
+}
+
+/* breathing beat: ease the whole screen out before Level 2 slides up */
+.transition-leaving {
+  opacity: 0;
+}
+
+/* line 1 — appears immediately */
+.transition-sub,
+.transition-line {
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.65);
+  animation: screen-in 0.5s ease both;
+}
+
+/* line 1 fading out before line 2 appears */
+.transition-sub-out {
+  animation: fade-out 0.5s ease forwards;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.transition-stamp {
+  font-family: var(--display);
+  font-size: 38px;
+  color: var(--coral);
+  text-transform: uppercase;
+  animation: stamp-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+
+@keyframes stamp-in {
+  from { opacity: 0; transform: scale(1.6) rotate(-4deg); }
+  to { opacity: 1; transform: scale(1) rotate(-2deg); }
+}
+
+/* ---- confetti ---- */
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+}
+
+.pom {
+  position: fixed;
+  top: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  animation: pom-fall linear both;
+  filter: drop-shadow(0 1px 2px rgba(120, 70, 20, 0.25));
+}
+
+@keyframes pom-fall {
+  0%   { transform: translate(0, -80px) rotate(0deg); opacity: 0; }
+  8%   { opacity: 1; }
+  100% { transform: translate(var(--drift, 0px), 115vh) rotate(var(--spin, 360deg)); opacity: 0.9; }
+}
+
+/* ---- level 3: full coral theatrical screen ---- */
+.level3 {
+  background: #F2624A;
+  color: var(--cream);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: none;
+}
+
+.level3-eyebrow {
+  position: absolute;
+  top: 28px;
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  opacity: 0.8;
+}
+
+.level3-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 0 8px;
+}
+
+.beat {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.15;
+  animation: beat-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes beat-in {
+  from { opacity: 0; transform: scale(1.45); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.beat-crash {
+  animation: beat-crash 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes beat-crash {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12) rotate(-1.5deg); }
+  100% { transform: scale(1.04); }
+}
+
+/* ---- final card: modern editorial ---- */
+.final {
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.final-card {
+  position: relative;
+  width: 100%;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 166, 35, 0.08), transparent 60%),
+    #FFFDF7;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 34px rgba(120, 80, 20, 0.14);
+  padding: 34px 24px 28px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* faint marigold motifs tucked in opposite corners */
+.final-motif {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  background: url('/assets/marigold-orange.png') center / contain no-repeat;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.final-motif-tl {
+  top: -22px;
+  left: -22px;
+}
+
+.final-motif-br {
+  bottom: -22px;
+  right: -22px;
+  transform: rotate(180deg);
+}
+
+.share-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--coral);
+  opacity: 0.75;
+  padding: 6px;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.25s ease;
+}
+
+.share-btn:active {
+  opacity: 0.38;
+}
+
+.final-kicker {
+  position: relative;
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.final-wordmark {
+  position: relative;
+  font-family: var(--display);
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: var(--coral);
+}
+
+.gold-rule {
+  border: none;
+  border-top: 1px solid rgba(212, 175, 55, 0.55);
+  margin: 16px auto;
+  width: 72%;
+}
+
+.final-body {
+  font-size: 14px;
+  color: rgba(26, 26, 26, 0.6);
+}
+
+.final-verdict {
+  margin-top: 6px;
+  font-family: var(--display);
+  font-size: 23px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.final-label {
+  margin-top: 14px;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  color: rgba(26, 26, 26, 0.5);
+}
+
+.final-highlights {
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.final-total {
+  font-family: var(--display);
+  font-size: clamp(30px, 9vw, 42px);
+  color: var(--coral);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.final-small {
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: rgba(26, 26, 26, 0.5);
+}
+
+.final-paidby {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+}
+
+.final-paidby em {
+  color: var(--coral);
+}
+
+.copy-toast {
+  font-size: 13px;
+  color: rgba(26, 26, 26, 0.6);
+  animation: caption-in 0.3s ease both;
+}
+
+.final-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.final-share-cta {
+  width: auto;
+  min-width: 220px;
+}
+
+/* final screen restart — same coral pill as all other CTAs */
+.final-restart-btn {
+  width: auto;
+  min-width: 220px;
+}
+
+.final-restart {
+  font-family: var(--body);
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.5);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 4px 8px;
+}
+
+/* ---- mute toggle ---- */
+.mute-toggle {
+  position: fixed;
+  top: 16px;
+  right: max(16px, calc(50% - 240px + 16px));
+  z-index: 60;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 249, 240, 0.85);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
