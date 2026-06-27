@@ -134,10 +134,10 @@ export default function CardRow({ row, selected, onSelect }) {
             </button>
           )
         })}
-        {floatingPrices.map(float => (
-          <FloatingPrice key={float.id} price={float.price} x={float.x} y={float.y} />
-        ))}
       </div>
+      {floatingPrices.map(float => (
+        <FloatingPrice key={float.id} price={float.price} x={float.x} y={float.y} />
+      ))}
     </section>
   )
 }
