@@ -65,7 +65,7 @@ export default function CardRow({ row, selected, onSelect }) {
             if (row.key === 'theme') {
               const rect = e.currentTarget.getBoundingClientRect()
               const cardCenterX = rect.left + rect.width / 2
-              const aboveCardY = rect.top - 2 // ABOVE card border, 2px breathing space
+              const aboveCardY = rect.top - 10 // Clear gap above card border (text height + 1px buffer)
 
               const floatId = `${card.id}-${Date.now()}`
               setFloatingPrices(prev => [...prev, { id: floatId, x: cardCenterX, y: aboveCardY, price: card.price }])
