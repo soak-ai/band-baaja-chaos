@@ -62,17 +62,16 @@ export default function CardRow({ row, selected, onSelect }) {
 
           const handle = (e) => {
             // Trigger price animation only for theme category (test)
-            if (row.key === 'theme') {
-              const rect = e.currentTarget.getBoundingClientRect()
-              const cardCenterX = rect.left + rect.width / 2
-              const aboveCardY = rect.top - 11 // Clear gap above card border (text height + 2px buffer)
+            // Floating price animation for all cards
+            const rect = e.currentTarget.getBoundingClientRect()
+            const cardCenterX = rect.left + rect.width / 2
+            const aboveCardY = rect.top - 11 // Clear gap above card border (text height + 2px buffer)
 
-              const floatId = `${card.id}-${Date.now()}`
-              setFloatingPrices(prev => [...prev, { id: floatId, x: cardCenterX, y: aboveCardY, price: card.price }])
-              setTimeout(() => {
-                setFloatingPrices(prev => prev.filter(f => f.id !== floatId))
-              }, 2000)
-            }
+            const floatId = `${card.id}-${Date.now()}`
+            setFloatingPrices(prev => [...prev, { id: floatId, x: cardCenterX, y: aboveCardY, price: card.price }])
+            setTimeout(() => {
+              setFloatingPrices(prev => prev.filter(f => f.id !== floatId))
+            }, 2000)
 
             if (veiled) {
               if (isVeiled) {
