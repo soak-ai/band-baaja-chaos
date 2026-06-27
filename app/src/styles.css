@@ -665,16 +665,17 @@ button {
 /* floating price animation — floats up from card to burn meter, fades out */
 .floating-price {
   position: fixed;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--gold);
-  text-shadow: 0 2px 4px rgba(26, 26, 26, 0.1);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--marigold);
+  text-shadow: 0 0 14px rgba(245, 166, 35, 0.7), 0 2px 8px rgba(26, 26, 26, 0.2);
   pointer-events: none;
   z-index: 9999;
   left: var(--start-x);
   top: var(--start-y);
   transform: translateX(-50%) translateY(-50%);
-  animation: price-float 1s ease-out forwards;
+  animation: price-float 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  letter-spacing: 0.5px;
 }
 
 @keyframes price-float {
@@ -682,9 +683,12 @@ button {
     opacity: 1;
     transform: translateX(-50%) translateY(-50%) scale(1);
   }
+  50% {
+    opacity: 1;
+  }
   100% {
     opacity: 0;
-    transform: translateX(-50%) translateY(calc(-50% - 180px)) scale(1.1);
+    transform: translateX(-50%) translateY(calc(-50% - 300px)) scale(1.3);
   }
 }
 
