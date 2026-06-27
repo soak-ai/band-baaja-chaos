@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { formatINR } from '../data'
 
 function CardArt({ img, artScale }) {
   const [missing, setMissing] = useState(!img)
@@ -14,6 +15,18 @@ function CardArt({ img, artScale }) {
   )
 }
 
+function FloatingPrice({ price, x, y }) {
+  return (
+    <div
+      className="floating-price"
+      style={{ '--start-x': `${x}px`, '--start-y': `${y}px` }}
+      aria-hidden="true"
+    >
+      ₹{formatINR(price)}
+    </div>
+  )
+}
+
 export default function CardRow({ row, selected, onSelect }) {
   const veiled = row.key === 'wildcard'
   const [revealedId, setRevealedId] = useState(null)
@@ -21,6 +34,7 @@ export default function CardRow({ row, selected, onSelect }) {
   const [swappingId, setSwappingId] = useState(null)
   const [swapReveal, setSwapReveal] = useState(false)
   const [closingIds, setClosingIds] = useState(new Set())
+  const [floatingPrices, setFloatingPrices] = useState([])
 
   return (
     <section className="row">
@@ -46,7 +60,18 @@ export default function CardRow({ row, selected, onSelect }) {
             }
           }
 
-          const handle = () => {
+          const handle = (e) => {
+            // Trigger price animation
+            const rect = e.currentTarget.getBoundingClientRect()
+            const cardCenterX = rect.left + rect.width / 2
+            const cardCenterY = rect.top + rect.height / 2
+
+            const floatId = `${card.id}-${Date.now()}`
+            setFloatingPrices(prev => [...prev, { id: floatId, x: cardCenterX, y: cardCenterY, price: card.price }])
+            setTimeout(() => {
+              setFloatingPrices(prev => prev.filter(f => f.id !== floatId))
+            }, 1000)
+
             if (veiled) {
               if (isVeiled) {
                 if (revealedId) {
@@ -106,6 +131,9 @@ export default function CardRow({ row, selected, onSelect }) {
             </button>
           )
         })}
+        {floatingPrices.map(float => (
+          <FloatingPrice key={float.id} price={float.price} x={float.x} y={float.y} />
+        ))}
       </div>
     </section>
   )
