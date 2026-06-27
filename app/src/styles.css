@@ -662,27 +662,31 @@ button {
   to { opacity: 1; transform: none; }
 }
 
-/* floating price animation — subtle, calm float up and fade */
+/* floating price animation — gold flash transitioning to caption color */
 .floating-price {
   position: fixed;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  color: #b08a82;
   pointer-events: none;
   z-index: 99999;
   left: var(--start-x);
   top: var(--start-y);
   transform: translateX(-50%) translateY(-50%);
-  animation: price-float 0.75s ease-out forwards;
+  animation: price-float 1.5s ease-out forwards;
 }
 
 @keyframes price-float {
   0% {
     opacity: 1;
+    color: var(--gold);
     transform: translateX(-50%) translateY(-50%);
+  }
+  30% {
+    color: #b08a82;
   }
   100% {
     opacity: 0;
+    color: #b08a82;
     transform: translateX(-50%) translateY(calc(-50% - 50px));
   }
 }
