@@ -669,7 +669,7 @@ button {
   font-weight: 500;
   color: #b08a82;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 99999;
   left: var(--start-x);
   top: var(--start-y);
   transform: translateX(-50%) translateY(-50%);
