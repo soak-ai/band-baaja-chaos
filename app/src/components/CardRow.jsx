@@ -62,8 +62,8 @@ export default function CardRow({ row, selected, onSelect }) {
 
           const handle = (e) => {
             // Trigger price animation only for theme category (test)
-            // Floating price animation (theme test)
-            if (row.key === 'theme') {
+            // Floating price animation (all categories except guests)
+            if (row.key !== 'guests') {
               const rect = e.currentTarget.getBoundingClientRect()
               const cardCenterX = rect.left + rect.width / 2
               const aboveCardY = rect.top - 11 // Clear gap above card border (text height + 2px buffer)
