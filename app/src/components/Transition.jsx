@@ -12,10 +12,10 @@ export default function Transition({ onDone }) {
     sound.play('shehnai')
     sound.playClip('dhol', 5, 0.3, 3.0) // extended fade so music covers line 2 hold
     const timers = [
-      setTimeout(() => setPhase('hiding1'),  800), // line 1 starts fading (0.5s fade-out)
-      setTimeout(() => setPhase('line2'),   1300), // line 2 appears exactly when line 1 finishes — zero gap
-      setTimeout(() => setPhase('leaving'), 3500), // line 2 holds ~2.2s before screen fades
-      setTimeout(onDone,                   4200),
+      setTimeout(() => setPhase('hiding1'),  1600), // line 1 holds 1.6s, then starts fading
+      setTimeout(() => setPhase('line2'),    2100), // line 2 appears after line 1 fades out
+      setTimeout(() => setPhase('leaving'),  3700), // line 2 holds same ~1.6s
+      setTimeout(onDone,                    4400),
     ]
     return () => timers.forEach(clearTimeout)
   }, [onDone])
