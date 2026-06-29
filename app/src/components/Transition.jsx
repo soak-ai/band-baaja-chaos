@@ -23,7 +23,7 @@ export default function Transition({ onDone }) {
   return (
     <main className={`screen transition${phase === 'leaving' ? ' transition-leaving' : ''}`}>
       <div className="transition-ambient" aria-hidden="true" />
-      <Confetti />
+      <Confetti fast />
       {(phase === 'line1' || phase === 'hiding1') && (
         <p className={`transition-sub${phase === 'hiding1' ? ' transition-sub-out' : ''}`}>
           crazy scene set.

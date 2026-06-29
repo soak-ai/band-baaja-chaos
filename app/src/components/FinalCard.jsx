@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Confetti from './Confetti'
+import Ticker from './Ticker'
 import { formatINR, verdictFor } from '../data'
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -172,7 +173,14 @@ async function generateCardBlob(total, verdict, highlights) {
 
 export default function FinalCard({ picks, total, onRestart }) {
   const [toast, setToast] = useState('')
+  const [cardVisible, setCardVisible] = useState(false)
   const cardRef = useRef(null)
+
+  // show ticker first, reveal card after 3.5s
+  useEffect(() => {
+    const t = setTimeout(() => setCardVisible(true), 3500)
+    return () => clearTimeout(t)
+  }, [])
 
   const highlights = [
     picks.venue?.insert,
@@ -243,43 +251,48 @@ export default function FinalCard({ picks, total, onRestart }) {
 
   return (
     <main className="screen final">
+      <Ticker picks={picks} dim={cardVisible} />
       <Confetti />
-      <div className="final-card" ref={cardRef}>
-        <span className="final-motif final-motif-tl" aria-hidden="true" />
-        <span className="final-motif final-motif-br" aria-hidden="true" />
+      {cardVisible && (
+        <>
+          <div className="final-card final-card-reveal" ref={cardRef}>
+            <span className="final-motif final-motif-tl" aria-hidden="true" />
+            <span className="final-motif final-motif-br" aria-hidden="true" />
 
-        <button className="share-btn" onClick={share} aria-label="share">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M12 3v12" />
-            <path d="M7.5 7.5 12 3l4.5 4.5" />
-            <path d="M5 13v6a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6" />
-          </svg>
-        </button>
+            <button className="share-btn" onClick={share} aria-label="share">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3v12" />
+                <path d="M7.5 7.5 12 3l4.5 4.5" />
+                <path d="M5 13v6a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6" />
+              </svg>
+            </button>
 
-        <p className="final-wordmark">BAND BAAJA CHAOS</p>
-        <hr className="gold-rule" />
-        <p className="final-body">log kya kahenge?</p>
-        <p className="final-verdict">{verdictFor(total)}</p>
+            <p className="final-wordmark">BAND BAAJA CHAOS</p>
+            <hr className="gold-rule" />
+            <p className="final-body">log kya kahenge?</p>
+            <p className="final-verdict">{verdictFor(total)}</p>
 
-        <p className="final-label">the highlights</p>
-        <p className="final-highlights">{highlights}.</p>
+            <p className="final-label">the highlights</p>
+            <p className="final-highlights">{highlights}.</p>
 
-        <hr className="gold-rule" />
-        <p className="final-label">bill total</p>
-        <p className="final-total">₹{formatINR(total)}</p>
-        <p className="final-small">a number best left unread.</p>
+            <hr className="gold-rule" />
+            <p className="final-label">bill total</p>
+            <p className="final-total">₹{formatINR(total)}</p>
+            <p className="final-small">a number best left unread.</p>
 
-        <hr className="gold-rule" />
-        <p className="final-paidby">
-          paid by: <em>vibes</em>
-        </p>
-      </div>
+            <hr className="gold-rule" />
+            <p className="final-paidby">
+              paid by: <em>vibes</em>
+            </p>
+          </div>
 
-      {toast && <p className="copy-toast">{toast}</p>}
+          {toast && <p className="copy-toast">{toast}</p>}
 
-      <button className="glass-btn glass-btn-ready final-restart-btn" onClick={onRestart}>
-        start over
-      </button>
+          <button className="glass-btn glass-btn-ready final-restart-btn" onClick={onRestart}>
+            start over
+          </button>
+        </>
+      )}
     </main>
   )
 }

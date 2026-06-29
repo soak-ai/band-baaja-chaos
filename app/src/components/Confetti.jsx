@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom'
 const MARIGOLDS = ['marigold-pink', 'marigold-orange', 'marigold-yellow']
 
 // falling marigold-petal confetti — mixed colours, varied size + rotation
-export default function Confetti({ count = 42 }) {
+export default function Confetti({ count = 42, fast = false }) {
   const petals = useMemo(
     () =>
       Array.from({ length: count }, (_, i) => ({
@@ -12,7 +12,7 @@ export default function Confetti({ count = 42 }) {
         left: Math.random() * 100,
         size: 12 + Math.random() * 10, // 12–22px — petal-sized, not overpowering
         delay: Math.random() * 0.4,
-        duration: 3.6 + Math.random() * 0.8,
+        duration: fast ? (2.4 + Math.random() * 0.6) : (3.6 + Math.random() * 0.8),
         drift: (Math.random() - 0.5) * 140,
         spin: (Math.random() - 0.5) * 540,
         img: MARIGOLDS[i % MARIGOLDS.length],
