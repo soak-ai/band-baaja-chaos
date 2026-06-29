@@ -12,7 +12,7 @@ export default function Confetti({ count = 42 }) {
         left: Math.random() * 100,
         size: 12 + Math.random() * 10, // 12–22px — petal-sized, not overpowering
         delay: Math.random() * 0.4,
-        duration: 2.2 + Math.random() * 1.4,
+        duration: 3.6 + Math.random() * 0.8,
         drift: (Math.random() - 0.5) * 140,
         spin: (Math.random() - 0.5) * 540,
         img: MARIGOLDS[i % MARIGOLDS.length],

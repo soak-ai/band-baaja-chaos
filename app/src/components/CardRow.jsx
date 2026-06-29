@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { formatINR } from '../data'
 
 function CardArt({ img, artScale }) {
@@ -15,15 +16,18 @@ function CardArt({ img, artScale }) {
   )
 }
 
+// Portal to document.body so position:fixed is relative to viewport,
+// not the transformed .screen ancestor
 function FloatingPrice({ price, x, y }) {
-  return (
+  return createPortal(
     <div
       className="floating-price"
       style={{ '--start-x': `${x}px`, '--start-y': `${y}px` }}
       aria-hidden="true"
     >
       ₹{formatINR(price)}
-    </div>
+    </div>,
+    document.body
   )
 }
 
