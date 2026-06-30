@@ -1128,20 +1128,21 @@ button {
 .ticker-col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
   flex-shrink: 0;
   width: 50vw;
   overflow: hidden;
+  align-items: center;
 }
 
 /* left column scrolls up */
 .ticker-col-up {
-  animation: ticker-up 20s linear infinite;
+  animation: ticker-up 22s linear infinite;
 }
 
 /* right column scrolls down */
 .ticker-col-down {
-  animation: ticker-down 20s linear infinite;
+  animation: ticker-down 22s linear infinite;
 }
 
 @keyframes ticker-up {
@@ -1154,13 +1155,15 @@ button {
   to   { transform: translateY(0); }
 }
 
+/* card is 80vw square — wider than the 50vw column so sides are clipped,
+   giving large portrait-feel tiles without zooming the image */
 .ticker-card {
-  width: 50vw;
+  width: 80vw;
   aspect-ratio: 1;
   flex-shrink: 0;
   background: #FFFDF7;
   border: 1px solid rgba(212, 175, 55, 0.22);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   transform: rotate(5deg);
 }
@@ -1169,7 +1172,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 6px;
+  padding: 8px;
 }
 
 /* card reveal animation */

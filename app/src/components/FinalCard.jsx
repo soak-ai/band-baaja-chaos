@@ -180,14 +180,18 @@ export default function FinalCard({ picks, total, onRestart }) {
   useEffect(() => {
     const t = setTimeout(() => {
       setCardVisible(true)
-      // trigger rupee burst from card center after card mounts
+      // wait two frames after card mounts so getBoundingClientRect is accurate
       setTimeout(() => {
-        if (cardRef.current) {
-          const r = cardRef.current.getBoundingClientRect()
-          setBurst({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
-          setTimeout(() => setBurst(null), 2000)
-        }
-      }, 300)
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (cardRef.current) {
+              const r = cardRef.current.getBoundingClientRect()
+              setBurst({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
+              setTimeout(() => setBurst(null), 2500)
+            }
+          })
+        })
+      }, 200)
     }, 600)
     return () => clearTimeout(t)
   }, [])
