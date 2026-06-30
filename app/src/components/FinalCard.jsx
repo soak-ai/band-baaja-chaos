@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import Ticker from './Ticker'
+import RupeeBurst from './RupeeBurst'
 import { formatINR, verdictFor } from '../data'
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -173,11 +174,21 @@ async function generateCardBlob(total, verdict, highlights) {
 export default function FinalCard({ picks, total, onRestart }) {
   const [toast, setToast] = useState('')
   const [cardVisible, setCardVisible] = useState(false)
+  const [burst, setBurst] = useState(null)
   const cardRef = useRef(null)
 
-  // show ticker first, reveal card after 3.5s
   useEffect(() => {
-    const t = setTimeout(() => setCardVisible(true), 600)
+    const t = setTimeout(() => {
+      setCardVisible(true)
+      // trigger rupee burst from card center after card mounts
+      setTimeout(() => {
+        if (cardRef.current) {
+          const r = cardRef.current.getBoundingClientRect()
+          setBurst({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
+          setTimeout(() => setBurst(null), 2000)
+        }
+      }, 300)
+    }, 600)
     return () => clearTimeout(t)
   }, [])
 
@@ -251,6 +262,7 @@ export default function FinalCard({ picks, total, onRestart }) {
   return (
     <main className="screen final">
       <Ticker picks={picks} dim={cardVisible} />
+      {burst && <RupeeBurst x={burst.x} y={burst.y} />}
       {cardVisible && (
         <>
           <div className="final-card final-card-reveal" ref={cardRef}>

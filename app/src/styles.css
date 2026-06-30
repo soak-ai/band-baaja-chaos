@@ -1119,7 +1119,7 @@ button {
 .ticker-col {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 10px;
   flex-shrink: 0;
   width: 50vw;
   overflow: hidden;
@@ -1147,10 +1147,11 @@ button {
 
 .ticker-card {
   width: 50vw;
-  height: 55vh;
+  aspect-ratio: 1;
   flex-shrink: 0;
   background: #FFFDF7;
   border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 12px;
   overflow: hidden;
   transform: rotate(5deg);
 }
@@ -1158,7 +1159,8 @@ button {
 .ticker-card img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 6px;
 }
 
 /* card reveal animation */
@@ -1169,6 +1171,27 @@ button {
 @keyframes card-reveal {
   from { opacity: 0; transform: scale(0.92); }
   to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---- rupee note burst from collectible card center ---- */
+.rupee-burst {
+  position: fixed;
+  left: var(--cx);
+  top: var(--cy);
+  pointer-events: none;
+  z-index: 99998;
+}
+
+.rupee-note {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: rupee-fly var(--duration, 1.2s) ease-out var(--delay, 0s) both;
+}
+
+@keyframes rupee-fly {
+  0%   { opacity: 0.9; transform: translate(-50%, -50%) rotate(0deg); }
+  60%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) rotate(var(--spin)); }
 }
 
 /* ---- final card: modern editorial ---- */

@@ -10,12 +10,12 @@ export default function Transition({ onDone }) {
 
   useEffect(() => {
     sound.play('shehnai')
-    sound.playClip('dhol', 7, 0.3, 4.5) // longer clip so music carries through line 2
+    sound.playClip('dhol', 5.5, 0.3, 2.0) // 5.5s, snappy 2s fade-in
     const timers = [
-      setTimeout(() => setPhase('hiding1'),  1600), // line 1 holds 1.6s, then starts fading
-      setTimeout(() => setPhase('line2'),    2100), // line 2 appears after line 1 fades out
-      setTimeout(() => setPhase('leaving'),  5300), // line 2 holds ~3.2s (was 1.6s)
-      setTimeout(onDone,                    6000),
+      setTimeout(() => setPhase('hiding1'),  1600),
+      setTimeout(() => setPhase('line2'),    2100), // line 2 appears
+      setTimeout(() => setPhase('leaving'),  4600), // line 2 holds 2.5s
+      setTimeout(onDone,                    5400),  // total ~5.4s
     ]
     return () => timers.forEach(clearTimeout)
   }, [onDone])
