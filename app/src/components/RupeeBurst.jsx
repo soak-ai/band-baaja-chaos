@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 // arc upward briefly then fall downward through/past the card.
 export default function RupeeBurst({ x, y, width = 260 }) {
   const notes = useMemo(() => (
-    Array.from({ length: 28 }, (_, i) => {
+    Array.from({ length: 48 }, (_, i) => {
       const spread = (Math.random() - 0.5) * width * 0.9
       const rise   = -(60 + Math.random() * 120)  // upward arc
       const fall   = 380 + Math.random() * 280     // fall past card
