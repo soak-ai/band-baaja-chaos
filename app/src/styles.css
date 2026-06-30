@@ -1094,37 +1094,39 @@ button {
 .ticker-bg {
   position: fixed;
   inset: 0;
-  background: #FCF8F2;
+  background: #101814;
   display: flex;
-  gap: 12px;
+  gap: 4vw;
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
   z-index: 0;
   opacity: 1;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
   pointer-events: none;
 }
 
 .ticker-bg-dim {
-  opacity: 0.3;
+  opacity: 0;
 }
 
 .ticker-col {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4vw;
   flex-shrink: 0;
+  width: 44vw;
+  max-width: 200px;
 }
 
 /* left column scrolls up */
 .ticker-col-up {
-  animation: ticker-up 8s linear infinite;
+  animation: ticker-up 12s linear infinite;
 }
 
 /* right column scrolls down */
 .ticker-col-down {
-  animation: ticker-down 8s linear infinite;
+  animation: ticker-down 12s linear infinite;
 }
 
 @keyframes ticker-up {
@@ -1138,15 +1140,13 @@ button {
 }
 
 .ticker-card {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  aspect-ratio: 1;
   border-radius: 12px;
   overflow: hidden;
   transform: rotate(5deg);
   flex-shrink: 0;
-  background: #FFFDF7;
-  border: 1px solid rgba(212, 175, 55, 0.2);
-  box-shadow: 0 4px 12px rgba(26, 26, 26, 0.08);
+  background: #1c2420;
 }
 
 .ticker-card img {
