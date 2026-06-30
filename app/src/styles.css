@@ -1094,7 +1094,7 @@ button {
 .ticker-bg {
   position: fixed;
   inset: 0;
-  background: #101814;
+  background: #FCF8F2;
   display: flex;
   gap: 4vw;
   justify-content: center;
@@ -1113,20 +1113,20 @@ button {
 .ticker-col {
   display: flex;
   flex-direction: column;
-  gap: 4vw;
+  gap: 16px;
   flex-shrink: 0;
   width: 44vw;
-  max-width: 200px;
+  max-width: 210px;
 }
 
 /* left column scrolls up */
 .ticker-col-up {
-  animation: ticker-up 12s linear infinite;
+  animation: ticker-up 18s linear infinite;
 }
 
 /* right column scrolls down */
 .ticker-col-down {
-  animation: ticker-down 12s linear infinite;
+  animation: ticker-down 18s linear infinite;
 }
 
 @keyframes ticker-up {
@@ -1142,11 +1142,12 @@ button {
 .ticker-card {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   transform: rotate(5deg);
   flex-shrink: 0;
-  background: #1c2420;
+  background: #FFFDF7;
+  border: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .ticker-card img {

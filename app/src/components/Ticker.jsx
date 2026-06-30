@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-// Two columns of pick images scrolling in opposite directions
+// Two columns of 3 pick images each, scrolling in opposite directions
 export default function Ticker({ picks, dim }) {
   const images = useMemo(() => {
     const imgs = [
@@ -13,16 +13,12 @@ export default function Ticker({ picks, dim }) {
     ].filter(Boolean)
 
     // shuffle
-    const shuffled = [...imgs].sort(() => Math.random() - 0.5)
-
-    // repeat to fill columns without gaps (need at least ~12 per column)
-    const repeated = []
-    while (repeated.length < 14) repeated.push(...shuffled)
-    return repeated
+    return [...imgs].sort(() => Math.random() - 0.5)
   }, [picks])
 
-  const left  = images.slice(0, 7)
-  const right = images.slice(7, 14)
+  // 3 per column — duplicate once for seamless loop
+  const left  = images.slice(0, 3)
+  const right = images.slice(3, 6)
 
   return (
     <div className={`ticker-bg${dim ? ' ticker-bg-dim' : ''}`} aria-hidden="true">
