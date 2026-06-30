@@ -575,18 +575,16 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: calc(var(--radius) - 1px);
-  /* warm coral fabric brushed with gold — coherent with the app's coral + gold palette */
   background:
     repeating-linear-gradient(125deg, rgba(255, 246, 230, 0.12) 0 9px, rgba(150, 70, 40, 0.05) 9px 18px),
     radial-gradient(circle at 74% 18%, rgba(245, 198, 100, 0.42), transparent 50%),
     radial-gradient(circle at 24% 90%, rgba(212, 175, 55, 0.30), transparent 55%),
     linear-gradient(150deg, #F9A98E 0%, #F2795A 50%, #C4552C 100%);
-    /* warm reveal: opacity + slight scale so the drape has physical weight, not a flat pop */
-  transition: opacity var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1)),
-              transform var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
+  transition: transform var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
   cursor: pointer;
-  will-change: opacity, transform;
-  transform: scale(1);
+  will-change: transform;
+  transform: translateY(0%);
+  overflow: hidden;
 }
 
 .card-drape-q {
@@ -614,10 +612,9 @@ button {
   animation: caption-in 0.5s ease 0.4s both;
 }
 
-/* drape lifts — fades with a gentle scale-back, like fabric being softly drawn away */
+/* drape lifts — slides up like a curtain, fully off-screen */
 .card-drape-lifted {
-  opacity: 0;
-  transform: scale(0.93);
+  transform: translateY(-105%);
   pointer-events: none;
 }
 
