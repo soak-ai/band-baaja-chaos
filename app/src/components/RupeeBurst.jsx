@@ -3,31 +3,26 @@ import { createPortal } from 'react-dom'
 
 export default function RupeeBurst({ x, y }) {
   const notes = useMemo(() => (
-    Array.from({ length: 18 }, (_, i) => {
-      const angle = (i / 18) * 360 + (Math.random() - 0.5) * 20
-      const dist = 90 + Math.random() * 130
+    Array.from({ length: 20 }, (_, i) => {
+      const angle = (i / 20) * 360 + (Math.random() - 0.5) * 18
+      const burst = 80 + Math.random() * 110
       const rad = (angle * Math.PI) / 180
       return {
         id: i,
-        dx: Math.cos(rad) * dist,
-        dy: Math.sin(rad) * dist,
-        size: 30 + Math.random() * 22,
-        delay: Math.random() * 0.25,
-        duration: 1.1 + Math.random() * 0.5,
-        spin: (Math.random() - 0.5) * 400,
+        bx: Math.cos(rad) * burst,
+        by: Math.sin(rad) * burst,
+        fall: 180 + Math.random() * 200, // downward gravity after burst
+        size: 28 + Math.random() * 20,
+        delay: Math.random() * 0.2,
+        duration: 1.2 + Math.random() * 0.6,
+        spin: (Math.random() - 0.5) * 450,
       }
     })
   ), [])
 
   return createPortal(
     <div
-      style={{
-        position: 'fixed',
-        left: x,
-        top: y,
-        pointerEvents: 'none',
-        zIndex: 99999,
-      }}
+      style={{ position: 'fixed', left: x, top: y, pointerEvents: 'none', zIndex: 99999 }}
       aria-hidden="true"
     >
       {notes.map(n => (
@@ -40,10 +35,11 @@ export default function RupeeBurst({ x, y }) {
             width: n.size,
             height: n.size,
             transform: 'translate(-50%, -50%)',
-            '--dx': `${n.dx}px`,
-            '--dy': `${n.dy}px`,
+            '--bx': `${n.bx}px`,
+            '--by': `${n.by}px`,
+            '--fall': `${n.fall}px`,
             '--spin': `${n.spin}deg`,
-            animation: `rupee-fly ${n.duration}s ease-out ${n.delay}s both`,
+            animation: `money-burst ${n.duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${n.delay}s both`,
           }}
         />
       ))}
