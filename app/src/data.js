@@ -58,10 +58,10 @@ export const ROWS = {
     withArt: true,
     cards: [
       { id: 'entry-ghodi',      name: 'ghodi',      img: 'entry-ghodi',      caption: 'the OG, iske bina kaise?', price: T[1], tier: 'budget' },
-      { id: 'entry-skateboard', name: 'skateboard', img: 'entry-skateboard', caption: 'kickflip down the aisle, lehenga mid-air', price: T[3], tier: 'mid' },
       { id: 'entry-tractor',   name: 'tractor',    img: 'entry-tractor',    caption: 'punjabi aa gaye oye!', price: T[1], tier: 'budget' },
       { id: 'entry-aladdin',   name: 'aladdin',    img: 'entry-aladdin',    caption: 'carpet awaits, trust issues with gravity', price: T[3], tier: 'mid' },
       { id: 'entry-g-wagon',   name: 'g-wagon',    img: 'entry-gwagon',     caption: 'matte black desi convoy', price: T[3], tier: 'mid' },
+      { id: 'entry-skateboard', name: 'skateboard', img: 'entry-skateboard', caption: 'kickflip down the aisle, lehenga mid-air', price: T[3], tier: 'mid' },
       { id: 'entry-wingsuit',  name: 'wingsuit',   img: 'entry-wingsuit',   caption: 'jumped off a cliff, landed at mandap', price: T[5], tier: 'luxury' },
       { id: 'entry-f1',        name: 'f1',          img: 'entry-f1',         caption: 'pit stop at the mandap', price: T[3], tier: 'mid' },
       { id: 'entry-moonwalk',  name: 'moonwalk',   img: 'entry-moonwalk',   caption: 'sequin gloves, backwards into forever', price: T[3], tier: 'mid' },

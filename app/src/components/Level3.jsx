@@ -26,7 +26,7 @@ export default function Level3({ picks, onDone }) {
 
   return (
     <main className="screen level3">
-      <p className="level3-eyebrow">Shubh muhurat</p>
+      <p className="level3-eyebrow"><span className="eyebrow-flower">❋</span> Shubh muhurat <span className="eyebrow-flower">❋</span></p>
       <div className="level3-stage">
         {beat === 1 && (
           <h2 key="b1" className="beat">
