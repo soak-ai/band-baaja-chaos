@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import Ticker from './Ticker'
+import RupeeBurst from './RupeeBurst'
 import { formatINR, verdictFor } from '../data'
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -173,10 +174,21 @@ async function generateCardBlob(total, verdict, highlights) {
 export default function FinalCard({ picks, total, onRestart }) {
   const [toast, setToast] = useState('')
   const [cardVisible, setCardVisible] = useState(false)
+  const [fountain, setFountain] = useState(null)
   const cardRef = useRef(null)
 
   useEffect(() => {
-    const t = setTimeout(() => setCardVisible(true), 600)
+    const t = setTimeout(() => {
+      setCardVisible(true)
+      // fountain from top of card — measure after two frames so rect is accurate
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (cardRef.current) {
+          const r = cardRef.current.getBoundingClientRect()
+          setFountain({ x: r.left + r.width / 2, y: r.top, width: r.width })
+          setTimeout(() => setFountain(null), 3000)
+        }
+      }))
+    }, 600)
     return () => clearTimeout(t)
   }, [])
 
@@ -249,7 +261,8 @@ export default function FinalCard({ picks, total, onRestart }) {
 
   return (
     <main className="screen final">
-      <Ticker picks={picks} dim={cardVisible} />
+      <Ticker picks={picks} />
+      {fountain && <RupeeBurst x={fountain.x} y={fountain.y} width={fountain.width} />}
       {cardVisible && (
         <>
           <div className="final-card final-card-reveal" ref={cardRef}>
