@@ -534,7 +534,17 @@ button {
   height: 100%;
   object-fit: contain;
   transform: scale(var(--art-scale, 1.05));
-  mix-blend-mode: multiply; /* blends any slight backdrop tint into the off-white */
+  mix-blend-mode: multiply;
+}
+
+/* image hidden while drape covers it; cross-dissolves in as drape fades out */
+.art-card-media:has(.card-drape:not(.card-drape-lifted)) .card-img {
+  opacity: 0;
+  transition: opacity var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
+}
+.art-card-media:has(.card-drape-lifted) .card-img {
+  opacity: 1;
+  transition: opacity var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 /* clean placeholder for any missing illustration */
@@ -580,11 +590,10 @@ button {
     radial-gradient(circle at 74% 18%, rgba(245, 198, 100, 0.42), transparent 50%),
     radial-gradient(circle at 24% 90%, rgba(212, 175, 55, 0.30), transparent 55%),
     linear-gradient(150deg, #F9A98E 0%, #F2795A 50%, #C4552C 100%);
-  transition: transform var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
+  transition: opacity var(--drape-dur, 1.4s) var(--drape-ease, cubic-bezier(0.4, 0, 0.2, 1));
   cursor: pointer;
-  will-change: transform;
-  transform: translateY(0%);
-  overflow: hidden;
+  will-change: opacity;
+  opacity: 1;
 }
 
 .card-drape-q {
@@ -612,9 +621,9 @@ button {
   animation: caption-in 0.5s ease 0.4s both;
 }
 
-/* drape lifts — slides up like a curtain, fully off-screen */
+/* drape lifts — dissolves away, image fades in beneath */
 .card-drape-lifted {
-  transform: translateY(-105%);
+  opacity: 0;
   pointer-events: none;
 }
 
