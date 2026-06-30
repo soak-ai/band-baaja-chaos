@@ -177,7 +177,7 @@ export default function FinalCard({ picks, total, onRestart }) {
 
   // show ticker first, reveal card after 3.5s
   useEffect(() => {
-    const t = setTimeout(() => setCardVisible(true), 6000)
+    const t = setTimeout(() => setCardVisible(true), 600)
     return () => clearTimeout(t)
   }, [])
 

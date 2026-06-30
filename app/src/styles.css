@@ -1111,9 +1111,9 @@ button {
   pointer-events: none;
 }
 
-/* fades to 30% — keeps looping behind the collectible card */
+/* dims behind the collectible card — stays looping continuously */
 .ticker-bg-dim {
-  opacity: 0.3;
+  opacity: 0.35;
 }
 
 .ticker-col {
@@ -1146,8 +1146,8 @@ button {
 }
 
 .ticker-card {
-  width: 100%;
-  aspect-ratio: 1;
+  width: 50vw;
+  height: 55vh;
   flex-shrink: 0;
   background: #FFFDF7;
   border: 1px solid rgba(212, 175, 55, 0.22);
