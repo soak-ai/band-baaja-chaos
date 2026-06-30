@@ -28,7 +28,7 @@ export default function Level3({ picks, onDone }) {
     <main className="screen level3">
       <p className="level3-eyebrow">
         <img src="/assets/marigold-orange.png" className="eyebrow-flower" alt="" aria-hidden="true" />
-        Shubh muhurat
+        <span className="eyebrow-label">Shubh muhurat</span>
         <img src="/assets/marigold-orange.png" className="eyebrow-flower" alt="" aria-hidden="true" />
       </p>
       <div className="level3-stage">

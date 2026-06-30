@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import Ticker from './Ticker'
-import RupeeBurst from './RupeeBurst'
 import { formatINR, verdictFor } from '../data'
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -174,25 +173,10 @@ async function generateCardBlob(total, verdict, highlights) {
 export default function FinalCard({ picks, total, onRestart }) {
   const [toast, setToast] = useState('')
   const [cardVisible, setCardVisible] = useState(false)
-  const [burst, setBurst] = useState(null)
   const cardRef = useRef(null)
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setCardVisible(true)
-      // wait two frames after card mounts so getBoundingClientRect is accurate
-      setTimeout(() => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            if (cardRef.current) {
-              const r = cardRef.current.getBoundingClientRect()
-              setBurst({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
-              setTimeout(() => setBurst(null), 3500)
-            }
-          })
-        })
-      }, 200)
-    }, 600)
+    const t = setTimeout(() => setCardVisible(true), 600)
     return () => clearTimeout(t)
   }, [])
 
@@ -266,7 +250,6 @@ export default function FinalCard({ picks, total, onRestart }) {
   return (
     <main className="screen final">
       <Ticker picks={picks} dim={cardVisible} />
-      {burst && <RupeeBurst x={burst.x} y={burst.y} />}
       {cardVisible && (
         <>
           <div className="final-card final-card-reveal" ref={cardRef}>
@@ -298,16 +281,6 @@ export default function FinalCard({ picks, total, onRestart }) {
             <p className="final-paidby">
               paid by: <em>vibes</em>
             </p>
-
-            <div className="final-tnc">
-              <p className="final-tnc-heading">terms &amp; conditions</p>
-              <ol className="final-tnc-list">
-                <li>Vendor confirmations via WA arrive between 3am and never.</li>
-                <li>Caterer has the freedom to cancel last minute.</li>
-                <li>BBC is not liable for family drama, opinions, or baraat delays.</li>
-                <li>By proceeding, you accept shaadi mein yahi hota hai.</li>
-              </ol>
-            </div>
           </div>
 
           {toast && <p className="copy-toast">{toast}</p>}

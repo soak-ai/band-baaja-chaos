@@ -1061,11 +1061,17 @@ button {
   top: 28px;
   font-family: var(--display);
   font-size: 15px;
-  letter-spacing: 0.22em;
   opacity: 0.8;
   display: flex;
   align-items: center;
   gap: 0;
+}
+
+/* letter-spacing lives on the text span, not the flex parent, so trailing
+   letter-spacing doesn't make the right flower gap wider than the left */
+.eyebrow-label {
+  letter-spacing: 0.22em;
+  margin-right: -0.22em;
 }
 
 .eyebrow-flower {
@@ -1108,14 +1114,11 @@ button {
   100% { transform: scale(1.04); }
 }
 
-/* ---- ticker: pre-card-reveal scrolling columns ---- */
+/* ---- ticker: two horizontal rows, tilted 8° as one diagonal belt ---- */
 .ticker-bg {
   position: fixed;
   inset: 0;
-  background: #1C0A06;
-  display: flex;
-  gap: 0;
-  align-items: flex-start;
+  background: #FCF8F2;
   overflow: hidden;
   z-index: 0;
   opacity: 1;
@@ -1123,60 +1126,54 @@ button {
   pointer-events: none;
 }
 
-/* dims behind the collectible card — stays looping continuously */
 .ticker-bg-dim {
-  opacity: 0.35;
+  opacity: 0.3;
 }
 
-.ticker-col {
+/* each row sits in a rotating wrapper positioned at top/bottom of screen */
+.ticker-row-wrap {
+  position: absolute;
+  left: -30vw;
+  width: 160vw;
+  transform: rotate(8deg);
+  transform-origin: center center;
+  overflow: visible;
+}
+
+.ticker-row-wrap-top    { top: 6vh; }
+.ticker-row-wrap-bottom { bottom: 6vh; }
+
+/* the scrolling row itself */
+.ticker-row {
   display: flex;
-  flex-direction: column;
-  gap: 0;
-  flex-shrink: 0;
-  width: 50vw;
-  overflow: hidden;
-  align-items: center;
+  flex-direction: row;
+  width: max-content;
 }
 
-/* left column scrolls up */
-.ticker-col-up {
-  animation: ticker-up 22s linear infinite;
-}
+/* margin-right on each card (not gap on row) so translateX(-50%) is a perfect
+   seamless loop: total width = 6*(card+margin), half = 3*(card+margin) exactly */
+.ticker-scroll-left  { animation: ticker-left  26s linear infinite; }
+.ticker-scroll-right { animation: ticker-right 26s linear infinite; }
 
-/* right column scrolls down */
-.ticker-col-down {
-  animation: ticker-down 22s linear infinite;
-}
+@keyframes ticker-left  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+@keyframes ticker-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-@keyframes ticker-up {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-50%); }
-}
-
-@keyframes ticker-down {
-  from { transform: translateY(-50%); }
-  to   { transform: translateY(0); }
-}
-
-/* portrait rectangular cards filling each 50vw column — gap via margin-bottom so
-   translateY(-50%) stays a perfect seamless loop point */
 .ticker-card {
-  width: 47vw;
-  aspect-ratio: 3/4;
+  width: 42vw;
+  aspect-ratio: 1;
   flex-shrink: 0;
   background: #FFFDF7;
-  border: 1px solid rgba(212, 175, 55, 0.30);
-  border-radius: 14px;
-  transform: rotate(5deg);
-  margin-bottom: 12px;
+  border: 2px solid rgba(26, 26, 26, 0.45);
+  border-radius: 12px;
   overflow: hidden;
+  margin-right: 8px;
 }
 
 .ticker-card img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 10px;
+  padding: 6px;
   display: block;
 }
 
@@ -1188,23 +1185,6 @@ button {
 @keyframes card-reveal {
   from { opacity: 0; transform: scale(0.92); }
   to   { opacity: 1; transform: scale(1); }
-}
-
-/* ---- rupee note money shower from collectible card center ---- */
-/* notes burst outward from card center, then fall off bottom of screen — no fade */
-@keyframes money-burst {
-  0%   {
-    transform: translate(-50%, -50%) rotate(0deg) scale(0.6);
-    opacity: 1;
-  }
-  22%  {
-    transform: translate(calc(-50% + var(--bx) * 0.6), calc(-50% + var(--by) * 0.6)) rotate(calc(var(--spin) * 0.35)) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by) + var(--fall))) rotate(var(--spin)) scale(0.9);
-    opacity: 1;
-  }
 }
 
 /* ---- final card: modern editorial ---- */
@@ -1341,45 +1321,6 @@ button {
   color: var(--coral);
 }
 
-.final-tnc {
-  margin-top: 12px;
-  text-align: left;
-}
-
-.final-tnc-heading {
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.38);
-  font-style: italic;
-  margin-bottom: 5px;
-}
-
-.final-tnc-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  counter-reset: tnc;
-}
-
-.final-tnc-list li {
-  counter-increment: tnc;
-  font-size: 9px;
-  line-height: 1.45;
-  color: rgba(26, 26, 26, 0.38);
-  font-style: italic;
-  padding-left: 12px;
-  position: relative;
-}
-
-.final-tnc-list li::before {
-  content: counter(tnc) '.';
-  position: absolute;
-  left: 0;
-  color: rgba(26, 26, 26, 0.28);
-}
 
 .copy-toast {
   font-size: 13px;
