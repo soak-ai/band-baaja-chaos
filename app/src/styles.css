@@ -1158,25 +1158,25 @@ button {
   to   { transform: translateY(0); }
 }
 
-/* card fits within 50vw column even when rotated 5deg — full image always visible */
+/* portrait rectangular cards filling each 50vw column — gap via margin-bottom so
+   translateY(-50%) stays a perfect seamless loop point */
 .ticker-card {
-  width: 44vw;
-  aspect-ratio: 1;
+  width: 47vw;
+  aspect-ratio: 3/4;
   flex-shrink: 0;
   background: #FFFDF7;
-  border: 1px solid rgba(212, 175, 55, 0.22);
-  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.30);
+  border-radius: 14px;
   transform: rotate(5deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
 }
 
 .ticker-card img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 8px;
+  padding: 10px;
   display: block;
 }
 
@@ -1342,9 +1342,7 @@ button {
 }
 
 .final-tnc {
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  margin-top: 12px;
   text-align: left;
 }
 
