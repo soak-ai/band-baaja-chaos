@@ -1159,14 +1159,17 @@ button {
 @keyframes ticker-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
 .ticker-card {
-  width: 42vw;
+  width: 48vw;
   aspect-ratio: 1;
   flex-shrink: 0;
   background: #FFFDF7;
-  border: 2px solid rgba(26, 26, 26, 0.45);
-  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  border-radius: 14px;
   overflow: hidden;
-  margin-right: 8px;
+  margin-right: 10px;
+  box-shadow:
+    0 4px 14px rgba(120, 80, 20, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .ticker-card img {
@@ -1321,6 +1324,46 @@ button {
   color: var(--coral);
 }
 
+
+.final-tnc {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.final-tnc-heading {
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.35);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.final-tnc-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  counter-reset: tnc;
+}
+
+.final-tnc-list li {
+  counter-increment: tnc;
+  font-size: 8.5px;
+  line-height: 1.4;
+  color: rgba(26, 26, 26, 0.35);
+  font-style: italic;
+  padding-left: 11px;
+  position: relative;
+}
+
+.final-tnc-list li::before {
+  content: counter(tnc) '.';
+  position: absolute;
+  left: 0;
+  color: rgba(26, 26, 26, 0.25);
+}
 
 .copy-toast {
   font-size: 13px;

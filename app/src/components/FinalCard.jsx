@@ -281,6 +281,15 @@ export default function FinalCard({ picks, total, onRestart }) {
             <p className="final-paidby">
               paid by: <em>vibes</em>
             </p>
+
+            <div className="final-tnc">
+              <p className="final-tnc-heading">terms &amp; conditions</p>
+              <ol className="final-tnc-list">
+                <li>Vendor confirmations via WA arrive between 3am and never.</li>
+                <li>BBC is not liable for family drama, opinions, or baraat delays.</li>
+                <li>By proceeding, you accept shaadi mein yahi hota hai.</li>
+              </ol>
+            </div>
           </div>
 
           {toast && <p className="copy-toast">{toast}</p>}
