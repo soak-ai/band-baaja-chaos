@@ -1102,37 +1102,37 @@ button {
   inset: 0;
   background: #FCF8F2;
   display: flex;
-  gap: 4vw;
-  justify-content: center;
+  gap: 0;
   align-items: flex-start;
   overflow: hidden;
   z-index: 0;
   opacity: 1;
-  transition: opacity 0.8s ease;
+  transition: opacity 1s ease;
   pointer-events: none;
 }
 
+/* fades to 30% — keeps looping behind the collectible card */
 .ticker-bg-dim {
-  opacity: 0;
+  opacity: 0.3;
 }
 
 .ticker-col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
   flex-shrink: 0;
-  width: 44vw;
-  max-width: 210px;
+  width: 50vw;
+  overflow: hidden;
 }
 
 /* left column scrolls up */
 .ticker-col-up {
-  animation: ticker-up 18s linear infinite;
+  animation: ticker-up 20s linear infinite;
 }
 
 /* right column scrolls down */
 .ticker-col-down {
-  animation: ticker-down 18s linear infinite;
+  animation: ticker-down 20s linear infinite;
 }
 
 @keyframes ticker-up {
@@ -1148,12 +1148,11 @@ button {
 .ticker-card {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 14px;
-  overflow: hidden;
-  transform: rotate(5deg);
   flex-shrink: 0;
   background: #FFFDF7;
-  border: 1px solid rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  overflow: hidden;
+  transform: rotate(5deg);
 }
 
 .ticker-card img {
@@ -1186,7 +1185,9 @@ button {
   width: 100%;
   background:
     radial-gradient(circle at 50% 0%, rgba(245, 166, 35, 0.08), transparent 60%),
-    #FFFDF7;
+    rgba(255, 253, 247, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(212, 175, 55, 0.5);
   border-radius: var(--radius);
   box-shadow: 0 10px 34px rgba(120, 80, 20, 0.14);

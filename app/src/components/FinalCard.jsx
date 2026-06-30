@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import Confetti from './Confetti'
 import Ticker from './Ticker'
 import { formatINR, verdictFor } from '../data'
 
@@ -252,7 +251,6 @@ export default function FinalCard({ picks, total, onRestart }) {
   return (
     <main className="screen final">
       <Ticker picks={picks} dim={cardVisible} />
-      <Confetti />
       {cardVisible && (
         <>
           <div className="final-card final-card-reveal" ref={cardRef}>
