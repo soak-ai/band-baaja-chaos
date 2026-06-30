@@ -1065,7 +1065,7 @@ button {
   opacity: 0.8;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0;
 }
 
 .eyebrow-flower {
@@ -1074,6 +1074,7 @@ button {
   object-fit: contain;
   opacity: 0.75;
   flex-shrink: 0;
+  margin: 0 8px;
 }
 
 .level3-stage {
@@ -1157,17 +1158,18 @@ button {
   to   { transform: translateY(0); }
 }
 
-/* card is 80vw square — wider than the 50vw column so sides are clipped,
-   giving large portrait-feel tiles without zooming the image */
+/* card fits within 50vw column even when rotated 5deg — full image always visible */
 .ticker-card {
-  width: 80vw;
+  width: 44vw;
   aspect-ratio: 1;
   flex-shrink: 0;
   background: #FFFDF7;
   border: 1px solid rgba(212, 175, 55, 0.22);
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 12px;
   transform: rotate(5deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ticker-card img {
@@ -1175,6 +1177,7 @@ button {
   height: 100%;
   object-fit: contain;
   padding: 8px;
+  display: block;
 }
 
 /* card reveal animation */
@@ -1187,20 +1190,20 @@ button {
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* ---- rupee note burst from collectible card center ---- */
-/* money shower — burst from card center, scatter outward then fall + fade */
+/* ---- rupee note money shower from collectible card center ---- */
+/* notes burst outward from card center, then fall off bottom of screen — no fade */
 @keyframes money-burst {
   0%   {
-    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.6);
     opacity: 1;
   }
-  28%  {
-    transform: translate(calc(-50% + var(--bx) * 0.55), calc(-50% + var(--by) * 0.55)) rotate(calc(var(--spin) * 0.3)) scale(1.05);
+  22%  {
+    transform: translate(calc(-50% + var(--bx) * 0.6), calc(-50% + var(--by) * 0.6)) rotate(calc(var(--spin) * 0.35)) scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by) + var(--fall))) rotate(var(--spin)) scale(0.5);
-    opacity: 0;
+    transform: translate(calc(-50% + var(--bx)), calc(-50% + var(--by) + var(--fall))) rotate(var(--spin)) scale(0.9);
+    opacity: 1;
   }
 }
 
@@ -1336,6 +1339,48 @@ button {
 
 .final-paidby em {
   color: var(--coral);
+}
+
+.final-tnc {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212, 175, 55, 0.25);
+  text-align: left;
+}
+
+.final-tnc-heading {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.38);
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.final-tnc-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  counter-reset: tnc;
+}
+
+.final-tnc-list li {
+  counter-increment: tnc;
+  font-size: 9px;
+  line-height: 1.45;
+  color: rgba(26, 26, 26, 0.38);
+  font-style: italic;
+  padding-left: 12px;
+  position: relative;
+}
+
+.final-tnc-list li::before {
+  content: counter(tnc) '.';
+  position: absolute;
+  left: 0;
+  color: rgba(26, 26, 26, 0.28);
 }
 
 .copy-toast {

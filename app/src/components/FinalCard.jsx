@@ -187,7 +187,7 @@ export default function FinalCard({ picks, total, onRestart }) {
             if (cardRef.current) {
               const r = cardRef.current.getBoundingClientRect()
               setBurst({ x: r.left + r.width / 2, y: r.top + r.height / 2 })
-              setTimeout(() => setBurst(null), 2500)
+              setTimeout(() => setBurst(null), 3500)
             }
           })
         })
@@ -298,6 +298,15 @@ export default function FinalCard({ picks, total, onRestart }) {
             <p className="final-paidby">
               paid by: <em>vibes</em>
             </p>
+
+            <div className="final-tnc">
+              <p className="final-tnc-heading">terms &amp; conditions</p>
+              <ol className="final-tnc-list">
+                <li>Actual wedding costs may vary. Significantly. We warned you.</li>
+                <li>Band Baaja Chaos is not liable for family opinions, venue drama, or baraat delays.</li>
+                <li>By proceeding, you accept that shaadi mein yahi hota hai.</li>
+              </ol>
+            </div>
           </div>
 
           {toast && <p className="copy-toast">{toast}</p>}

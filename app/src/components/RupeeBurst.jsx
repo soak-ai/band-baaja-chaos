@@ -5,17 +5,17 @@ export default function RupeeBurst({ x, y }) {
   const notes = useMemo(() => (
     Array.from({ length: 20 }, (_, i) => {
       const angle = (i / 20) * 360 + (Math.random() - 0.5) * 18
-      const burst = 80 + Math.random() * 110
+      const burst = 100 + Math.random() * 120
       const rad = (angle * Math.PI) / 180
       return {
         id: i,
         bx: Math.cos(rad) * burst,
         by: Math.sin(rad) * burst,
-        fall: 180 + Math.random() * 200, // downward gravity after burst
-        size: 28 + Math.random() * 20,
-        delay: Math.random() * 0.2,
-        duration: 1.2 + Math.random() * 0.6,
-        spin: (Math.random() - 0.5) * 450,
+        fall: 700 + Math.random() * 400, // enough to fall off bottom of screen
+        size: 32 + Math.random() * 22,
+        delay: Math.random() * 0.25,
+        duration: 1.6 + Math.random() * 0.8,
+        spin: (Math.random() - 0.5) * 540,
       }
     })
   ), [])

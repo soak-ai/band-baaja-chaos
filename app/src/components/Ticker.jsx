@@ -10,13 +10,13 @@ export default function Ticker({ picks, dim }) {
       picks.food?.img,
       picks.wildcard?.img,
     ].filter(Boolean)
-    // shuffle so columns feel varied each run
     return [...imgs].sort(() => Math.random() - 0.5)
   }, [picks])
 
-  // 3 per column — each pick appears exactly once across both columns
-  const left  = images.slice(0, 3)
-  const right = images.slice(3, 6)
+  // each column gets all 6 images (different rotation) so no image repeats on screen
+  // with 44vw cards (~171px on 390px phone), 6 cards = ~1026px > viewport height
+  const left  = images
+  const right = [...images.slice(3), ...images.slice(0, 3)]
 
   return (
     <div className={`ticker-bg${dim ? ' ticker-bg-dim' : ''}`} aria-hidden="true">
