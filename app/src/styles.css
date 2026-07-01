@@ -115,7 +115,7 @@ button {
 .splash-bg {
   position: absolute;
   inset: 0;
-  background: var(--cream) url('/assets/splash-bg-new.png') center / cover no-repeat;
+  background: var(--cream) url('/assets/splash-bg-v2.jpg') center / cover no-repeat;
 }
 
 /* square box centred on the ring; dots sit on its inscribed circle */
@@ -998,26 +998,18 @@ button {
   animation: screen-in 0.5s ease both;
 }
 
-/* line 2 — fades in, then rapid scale tinkering in place */
+/* line 2 — zooms in from small, zooms back to normal size, then rests */
 .transition-line {
   font-size: 17px;
   font-weight: 500;
   color: rgba(26, 26, 26, 0.65);
-  animation: line2-in 0.3s ease both, line2-tink 0.4s ease 0.3s both;
+  animation: line2-zoom 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes line2-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes line2-tink {
-  0%   { transform: scale(1); }
-  20%  { transform: scale(1.04); }
-  40%  { transform: scale(0.97); }
-  60%  { transform: scale(1.03); }
-  80%  { transform: scale(0.99); }
-  100% { transform: scale(1); }
+@keyframes line2-zoom {
+  0%   { opacity: 0; transform: scale(0.4); }
+  60%  { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 /* line 1 fading out before line 2 appears */
@@ -1135,58 +1127,49 @@ button {
   100% { transform: scale(1.04); }
 }
 
-/* ---- ticker: 2 vertical columns, tilted -45°, scrolling up/down ---- */
+/* ---- ticker: 2 vertical columns, slight tilt, scrolling up/down ---- */
 .ticker-bg {
   position: fixed;
   inset: 0;
-  background: #d9cebf;
+  background: #d4c9b8;
   overflow: hidden;
   z-index: 0;
   pointer-events: none;
-  transition: opacity 0.8s ease;
-  opacity: 1;
 }
 
-.ticker-bg-dim {
-  opacity: 0.5;
-}
-
-/* two columns rotated -45° — massively oversized so no corner is ever bare */
+/* two columns, slight tilt, oversized to fill corners */
 .ticker-frame {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 300%;
-  height: 300vh;
-  transform: translate(-50%, -50%) rotate(-45deg);
+  width: 160%;
+  height: 240vh;
+  transform: translate(-50%, -50%) rotate(5deg);
   display: flex;
   flex-direction: row;
-  gap: 14px;
+  gap: 12px;
 }
 
-/* each column clips its vertically scrolling track */
 .ticker-col {
   flex: 1;
   overflow: hidden;
   height: 100%;
 }
 
-/* vertical track: stacks cards in a column */
 .ticker-track {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
 }
 
-/* left col scrolls up, right col scrolls down — slow & smooth */
 .ticker-scroll-up   { animation: ticker-up   40s linear infinite; }
 .ticker-scroll-down { animation: ticker-down 40s linear infinite; }
 
 @keyframes ticker-up   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
 @keyframes ticker-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
 
-/* card slot: square, rounded 8px */
+/* card slot: square, rounded, images rotated 45° inside */
 .ticker-slot {
   width: 100%;
   aspect-ratio: 1;
@@ -1200,11 +1183,12 @@ button {
 }
 
 .ticker-slot img {
-  width: 100%;
-  height: 100%;
+  width: 130%;
+  height: 130%;
   object-fit: contain;
   display: block;
   opacity: 0.3;
+  transform: rotate(-45deg);
 }
 
 /* card reveal animation */
