@@ -12,9 +12,11 @@ export default function Transition({ onDone }) {
     const timers = [
       setTimeout(() => setPhase('hiding1'),   1100),
       setTimeout(() => setPhase('line2'),     1500),
-      setTimeout(() => setPhase('launching'), 3200),
-      setTimeout(() => setPhase('leaving'),   3600),
-      setTimeout(onDone,                      3850),
+      // line2 tinkering: 0.3s fade + 0.4s stutter = done at ~2.2s
+      // then rests on screen for ~1.5s before fading out
+      setTimeout(() => setPhase('launching'), 3800),
+      setTimeout(() => setPhase('leaving'),   4200),
+      setTimeout(onDone,                      4500),
     ]
     return () => timers.forEach(clearTimeout)
   }, [onDone])

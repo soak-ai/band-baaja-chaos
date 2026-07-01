@@ -272,7 +272,7 @@ export default function FinalCard({ picks, total, onRestart }) {
             <hr className="gold-rule" />
             <p className="final-label">bill total</p>
             <p className="final-total">₹{formatINR(total)}</p>
-            <p className="final-small">a number best left unread.</p>
+            <p className="final-small">a number best left unread,</p>
 
             <p className="final-paidby">
               paid by: <em>vibes</em>
@@ -282,8 +282,9 @@ export default function FinalCard({ picks, total, onRestart }) {
             <div className="final-tnc">
               <p className="final-tnc-heading">terms &amp; conditions</p>
               <ol className="final-tnc-list">
-                <li>vendor confirmations via WA arrive between 3am and never.</li>
+                <li>vendor confirmations via WA: 3am to never.</li>
                 <li>caterer has the freedom to cancel last minute.</li>
+                <li>BBC is not responsible for photographer disappearances.</li>
               </ol>
             </div>
           </div>
