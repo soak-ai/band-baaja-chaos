@@ -222,12 +222,13 @@ export default function FinalCard({ picks, total, onRestart }) {
     if (navigator.share && cardRef.current) {
       try {
         const h2c = (await import('html2canvas')).default
+        if (document.fonts && document.fonts.ready) await document.fonts.ready
         const shareBtn = cardRef.current.querySelector('.share-btn')
         if (shareBtn) shareBtn.style.visibility = 'hidden'
         const canvas = await h2c(cardRef.current, {
           useCORS: true,
-          backgroundColor: null,
-          scale: window.devicePixelRatio || 2,
+          backgroundColor: '#FFFDF7',
+          scale: 3,
         })
         if (shareBtn) shareBtn.style.visibility = ''
         const blob = await new Promise(r => canvas.toBlob(r, 'image/png'))
