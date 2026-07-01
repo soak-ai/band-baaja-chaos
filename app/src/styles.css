@@ -198,8 +198,8 @@ button {
   position: absolute;
   top: calc(62% - 3px);
   left: 50%;
-  width: 24vw;
-  max-width: 100px;
+  width: 21.6vw;
+  max-width: 90px;
   transform: translate(-50%, -50%);
   pointer-events: none;
   object-fit: contain;
@@ -1095,12 +1095,12 @@ button {
 }
 
 .eyebrow-flower {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
   opacity: 0.75;
   flex-shrink: 0;
-  margin: 0 8px;
+  margin: 0 6px;
 }
 
 .level3-stage {
@@ -1138,7 +1138,7 @@ button {
 .ticker-bg {
   position: fixed;
   inset: 0;
-  background: #FCF8F2;
+  background: #f0eae0;
   overflow: hidden;
   z-index: 0;
   pointer-events: none;
@@ -1155,12 +1155,12 @@ button {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 80%;
-  height: 160vh;
+  width: 120%;
+  height: 200vh;
   transform: translate(-50%, -50%) rotate(15deg);
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 3px;
 }
 
 /* each column clips its vertically scrolling track */
@@ -1174,7 +1174,7 @@ button {
 .ticker-track {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   width: 100%;
 }
 
@@ -1185,13 +1185,13 @@ button {
 @keyframes ticker-up   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
 @keyframes ticker-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
 
-/* card slot: square, thin dark border, cream fill, rounded 8px */
+/* card slot: square, subtle light border, cream fill, rounded 8px */
 .ticker-slot {
   width: 100%;
   aspect-ratio: 1;
   flex-shrink: 0;
   background: #FCF8F2;
-  border: 1.5px solid #333;
+  border: 1px solid #d4c9b8;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -1200,8 +1200,8 @@ button {
 }
 
 .ticker-slot img {
-  width: 86%;
-  height: 86%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
 }
@@ -1216,15 +1216,15 @@ button {
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* L1→L2: line 2 pulses gently in place then fades out */
+/* L1→L2: line 2 pulses dramatically in place then fades out */
 .transition-line-launch {
-  animation: line2-pulse 0.6s ease forwards;
+  animation: line2-pulse 0.9s ease forwards;
 }
 
 @keyframes line2-pulse {
   0%   { transform: scale(1); opacity: 1; }
-  30%  { transform: scale(1.06); opacity: 1; }
-  60%  { transform: scale(1.02); opacity: 0.8; }
+  30%  { transform: scale(1.12); opacity: 1; }
+  60%  { transform: scale(1.04); opacity: 0.8; }
   100% { transform: scale(1); opacity: 0; }
 }
 

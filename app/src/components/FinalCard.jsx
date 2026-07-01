@@ -279,14 +279,13 @@ export default function FinalCard({ picks, total, onRestart }) {
             <p className="final-total">₹{formatINR(total)}</p>
             <p className="final-small">a number best left unread.</p>
 
-            <hr className="gold-rule" />
             <p className="final-paidby">
               paid by: <em>vibes</em>
             </p>
 
             <hr className="gold-rule gold-rule-thin" />
             <div className="final-tnc">
-              <p className="final-tnc-heading">T&amp;C</p>
+              <p className="final-tnc-heading">terms &amp; conditions</p>
               <ol className="final-tnc-list">
                 <li>vendor confirmations via WA arrive between 3am and never.</li>
                 <li>caterer has the freedom to cancel last minute.</li>
