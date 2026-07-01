@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import Ticker from './Ticker'
-import RupeeBurst from './RupeeBurst'
 import { formatINR, verdictFor } from '../data'
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -173,21 +172,14 @@ async function generateCardBlob(total, verdict, highlights) {
 
 export default function FinalCard({ picks, total, onRestart }) {
   const [toast, setToast] = useState('')
+  const [tickerDim, setTickerDim] = useState(false)
   const [cardVisible, setCardVisible] = useState(false)
-  const [fountain, setFountain] = useState(null)
   const cardRef = useRef(null)
 
   useEffect(() => {
-    const t = setTimeout(() => setCardVisible(true), 600)
-    // fountain: 1s after card lands
-    const f = setTimeout(() => {
-      if (cardRef.current) {
-        const r = cardRef.current.getBoundingClientRect()
-        setFountain({ x: r.left + r.width / 2, y: r.top, width: r.width })
-        setTimeout(() => setFountain(null), 3000)
-      }
-    }, 1600)
-    return () => { clearTimeout(t); clearTimeout(f) }
+    // ticker runs at 100% for 3.5s, then dims and card appears
+    const t1 = setTimeout(() => { setTickerDim(true); setCardVisible(true) }, 3500)
+    return () => clearTimeout(t1)
   }, [])
 
   const highlights = [
@@ -259,8 +251,7 @@ export default function FinalCard({ picks, total, onRestart }) {
 
   return (
     <main className="screen final">
-      <Ticker picks={picks} />
-      {fountain && <RupeeBurst x={fountain.x} y={fountain.y} width={fountain.width} />}
+      <Ticker picks={picks} dim={tickerDim} />
       {cardVisible && (
         <>
           <div className="final-card final-card-reveal" ref={cardRef}>
@@ -288,24 +279,19 @@ export default function FinalCard({ picks, total, onRestart }) {
             <p className="final-total">₹{formatINR(total)}</p>
             <p className="final-small">a number best left unread.</p>
 
-            <hr className="gold-rule" />
-            <p className="final-paidby">
-              paid by: <em>vibes</em>
-            </p>
-
             <div className="final-tnc">
-              <p className="final-tnc-heading">terms &amp; conditions</p>
+              <p className="final-tnc-heading">T&amp;C</p>
               <ol className="final-tnc-list">
-                <li>Vendor confirmations via WA arrive between 3am and never.</li>
+                <li>vendor confirmations via WA arrive between 3am and never.</li>
+                <li>caterer has the freedom to cancel last minute.</li>
                 <li>BBC is not liable for family drama, opinions, or baraat delays.</li>
-                <li>By proceeding, you accept shaadi mein yahi hota hai.</li>
               </ol>
             </div>
           </div>
 
           {toast && <p className="copy-toast">{toast}</p>}
 
-          <button className="glass-btn glass-btn-ready final-restart-btn" onClick={onRestart}>
+          <button className="glass-btn final-restart-btn" onClick={onRestart}>
             start over
           </button>
         </>

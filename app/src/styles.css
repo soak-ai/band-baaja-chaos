@@ -193,6 +193,18 @@ button {
   50%       { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
 }
 
+/* three-flower brandmark on splash — replaces the small star ornament in bg image */
+.splash-brandmark {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  width: 48vw;
+  max-width: 190px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  object-fit: contain;
+}
+
 /* ---- home ---- */
 .home {
   position: relative;
@@ -998,21 +1010,12 @@ button {
   animation: screen-in 0.5s ease both;
 }
 
-/* line 2 — zooms in from depth, starts tiny and grows to full size */
+/* line 2 — same style as line 1, simple fade-in */
 .transition-line {
-  font-family: var(--display);
-  font-size: 28px;
-  font-weight: 400;
-  color: rgba(26, 26, 26, 0.82);
-  animation: line2-depth-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
-  text-align: center;
-  padding: 0 24px;
-}
-
-@keyframes line2-depth-in {
-  0%   { transform: scale(0.28); opacity: 0; letter-spacing: -0.04em; }
-  40%  { opacity: 1; }
-  100% { transform: scale(1);    opacity: 1; letter-spacing: normal; }
+  font-size: 17px;
+  font-weight: 500;
+  color: rgba(26, 26, 26, 0.65);
+  animation: screen-in 0.5s ease both;
 }
 
 /* line 1 fading out before line 2 appears */
@@ -1130,63 +1133,73 @@ button {
   100% { transform: scale(1.04); }
 }
 
-/* ---- ticker: two rows at 8°, top scrolls left, bottom scrolls right ---- */
+/* ---- ticker: two rows of card slots, entire frame rotated 15° ---- */
 .ticker-bg {
   position: fixed;
   inset: 0;
   background: #FCF8F2;
   overflow: hidden;
   z-index: 0;
-  /* fixed at 40% — no opacity transition, ticker + card arrive together */
-  opacity: 0.4;
   pointer-events: none;
-  animation: ticker-appear 0.5s ease 0.5s both;
+  /* starts fully visible; FinalCard adds ticker-bg-dim after 3.5s */
+  transition: opacity 0.8s ease;
+  opacity: 1;
 }
 
-@keyframes ticker-appear {
-  from { opacity: 0; }
-  to   { opacity: 0.4; }
+.ticker-bg-dim {
+  opacity: 0.3;
 }
 
-.ticker-row-wrap {
+/* the rotated frame that holds both rows */
+.ticker-frame {
   position: absolute;
-  left: -30vw;
-  width: 160vw;
-  transform: rotate(8deg);
-  transform-origin: center center;
-  overflow: visible;
+  top: 50%;
+  left: 50%;
+  /* wide enough that cards extend off-screen on both sides */
+  width: 180vw;
+  transform: translate(-50%, -50%) rotate(15deg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.ticker-row-wrap-top    { top: 8vh; }
-.ticker-row-wrap-bottom { bottom: 8vh; }
+/* each row wrapper clips its scrolling inner track */
+.ticker-row-wrap {
+  overflow: hidden;
+  width: 100%;
+}
 
 .ticker-row {
   display: flex;
   flex-direction: row;
+  gap: 8px;
   width: max-content;
 }
 
-.ticker-scroll-left  { animation: ticker-left  55s linear infinite; }
-.ticker-scroll-right { animation: ticker-right 55s linear infinite; }
+/* slow, calm conveyor speed */
+.ticker-scroll-left  { animation: ticker-left  60s linear infinite; }
+.ticker-scroll-right { animation: ticker-right 60s linear infinite; }
 
 @keyframes ticker-left  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
 @keyframes ticker-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-/* subtle gold outline — no fill, just the border so PNG floats on cream bg */
-.ticker-card {
-  width: 52vw;
+/* card slot: dark outline, cream fill, full image uncropped */
+.ticker-slot {
+  width: clamp(130px, 42vw, 180px);
   aspect-ratio: 1;
   flex-shrink: 0;
-  background: transparent;
-  border: 1px solid rgba(212, 175, 55, 0.42);
-  border-radius: 18px;
+  background: #FCF8F2;
+  border: 2px solid #1a1a1a;
+  border-radius: 3%;
   overflow: hidden;
-  margin-right: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.ticker-card img {
-  width: 100%;
-  height: 100%;
+.ticker-slot img {
+  width: 88%;
+  height: 88%;
   object-fit: contain;
   display: block;
 }
@@ -1372,10 +1385,8 @@ button {
 
 
 .final-tnc {
-  margin-top: 14px;
+  margin-top: 10px;
   text-align: left;
-  border-top: 1px solid rgba(212, 175, 55, 0.28);
-  padding-top: 10px;
 }
 
 .final-tnc-heading {
@@ -1432,13 +1443,19 @@ button {
   min-width: 220px;
 }
 
-/* final screen restart — same coral pill, slightly smaller than main CTAs */
+/* final screen restart — outline only, no fill */
 .final-restart-btn {
   width: auto;
   min-width: 160px;
   max-width: 220px;
   padding: 12px 28px;
   font-size: 15px;
+  background: transparent !important;
+  border: 1.5px solid rgba(232, 112, 96, 0.75) !important;
+  color: rgba(232, 112, 96, 0.9) !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
 }
 
 .final-restart {
