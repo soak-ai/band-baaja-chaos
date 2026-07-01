@@ -17,6 +17,7 @@ export default function Splash({ onDone }) {
       <div className={`splash-stage${phase === 'loading' ? ' is-hidden' : ''}`} aria-hidden="true">
         <div className="splash-bg" />
         <div className="splash-sheen" />
+        <div className="splash-lotus-cover" />
         <img className="splash-brandmark" src="/og-image-v2.png" alt="" />
       </div>
       {phase === 'loading' && (
