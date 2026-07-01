@@ -115,7 +115,7 @@ button {
 .splash-bg {
   position: absolute;
   inset: 0;
-  background: var(--cream) url('/assets/splash-bg.png') center / cover no-repeat;
+  background: var(--cream) url('/assets/splash-bg-new.png') center / cover no-repeat;
 }
 
 /* square box centred on the ring; dots sit on its inscribed circle */
@@ -191,20 +191,6 @@ button {
 @keyframes splash-pulse {
   0%, 100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.6; }
   50%       { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
-}
-
-/* three-flower brandmark on splash — multiply blends away the white PNG bg */
-.splash-brandmark {
-  position: absolute;
-  top: calc(62% - 8px);
-  left: 50%;
-  width: 21.6vw;
-  max-width: 90px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  object-fit: contain;
-  z-index: 2;
-  mix-blend-mode: multiply;
 }
 
 /* ---- home ---- */
