@@ -196,7 +196,7 @@ button {
 /* three-flower brandmark on splash — replaces the small star ornament in bg image */
 .splash-brandmark {
   position: absolute;
-  top: 62%;
+  top: calc(62% - 3px);
   left: 50%;
   width: 24vw;
   max-width: 100px;
