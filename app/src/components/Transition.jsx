@@ -10,11 +10,11 @@ export default function Transition({ onDone }) {
     sound.play('shehnai')
     sound.playClip('dhol', 5.5, 0.3, 2.0)
     const timers = [
-      setTimeout(() => setPhase('hiding1'),   1600),
-      setTimeout(() => setPhase('line2'),     2100),
-      setTimeout(() => setPhase('launching'), 4500), // bounce then shoot up
-      setTimeout(() => setPhase('leaving'),   5100), // screen fades
-      setTimeout(onDone,                      5500),
+      setTimeout(() => setPhase('hiding1'),   1100),
+      setTimeout(() => setPhase('line2'),     1500),
+      setTimeout(() => setPhase('launching'), 3200),
+      setTimeout(() => setPhase('leaving'),   3600),
+      setTimeout(onDone,                      3850),
     ]
     return () => timers.forEach(clearTimeout)
   }, [onDone])
