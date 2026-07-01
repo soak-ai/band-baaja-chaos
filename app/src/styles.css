@@ -991,12 +991,28 @@ button {
 }
 
 /* line 1 — appears immediately */
-.transition-sub,
-.transition-line {
+.transition-sub {
   font-size: 17px;
   font-weight: 500;
   color: rgba(26, 26, 26, 0.65);
   animation: screen-in 0.5s ease both;
+}
+
+/* line 2 — zooms in from depth, starts tiny and grows to full size */
+.transition-line {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 400;
+  color: rgba(26, 26, 26, 0.82);
+  animation: line2-depth-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  text-align: center;
+  padding: 0 24px;
+}
+
+@keyframes line2-depth-in {
+  0%   { transform: scale(0.28); opacity: 0; letter-spacing: -0.04em; }
+  40%  { opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; letter-spacing: normal; }
 }
 
 /* line 1 fading out before line 2 appears */
@@ -1071,7 +1087,7 @@ button {
    letter-spacing doesn't make the right flower gap wider than the left */
 .eyebrow-label {
   letter-spacing: 0.22em;
-  margin-right: -0.22em;
+  margin-right: -0.44em;
 }
 
 .eyebrow-flower {
@@ -1114,7 +1130,7 @@ button {
   100% { transform: scale(1.04); }
 }
 
-/* ---- ticker: single bottom row, all 6 images, tilted 8°, scrolls right ---- */
+/* ---- ticker: two rows at 8°, top scrolls left, bottom scrolls right ---- */
 .ticker-bg {
   position: fixed;
   inset: 0;
@@ -1141,7 +1157,8 @@ button {
   overflow: visible;
 }
 
-.ticker-row-wrap-bottom { bottom: 4vh; }
+.ticker-row-wrap-top    { top: 8vh; }
+.ticker-row-wrap-bottom { bottom: 8vh; }
 
 .ticker-row {
   display: flex;
@@ -1149,27 +1166,28 @@ button {
   width: max-content;
 }
 
-.ticker-scroll-right { animation: ticker-right 30s linear infinite; }
+.ticker-scroll-left  { animation: ticker-left  55s linear infinite; }
+.ticker-scroll-right { animation: ticker-right 55s linear infinite; }
 
+@keyframes ticker-left  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
 @keyframes ticker-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-/* no border — just molded corners. shadow gives the embossed depth. */
+/* subtle gold outline — no fill, just the border so PNG floats on cream bg */
 .ticker-card {
   width: 52vw;
   aspect-ratio: 1;
   flex-shrink: 0;
-  background: #FFFDF7;
-  border-radius: 16px;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 18px;
   overflow: hidden;
-  margin-right: 10px;
-  box-shadow: 0 6px 18px rgba(120, 80, 20, 0.13);
+  margin-right: 18px;
 }
 
 .ticker-card img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 6px;
   display: block;
 }
 
@@ -1228,14 +1246,14 @@ button {
 
 .final-card {
   position: relative;
-  width: 100%;
+  width: 90%;
   background:
     radial-gradient(circle at 50% 0%, rgba(245, 166, 35, 0.08), transparent 60%),
     #FFFDF7;
   border: 1px solid rgba(212, 175, 55, 0.5);
   border-radius: var(--radius);
   box-shadow: 0 10px 34px rgba(120, 80, 20, 0.14);
-  padding: 26px 20px 18px;
+  padding: 30px 22px 22px;
   text-align: center;
   overflow: hidden;
 }
@@ -1297,7 +1315,7 @@ button {
 .gold-rule {
   border: none;
   border-top: 1px solid rgba(212, 175, 55, 0.55);
-  margin: 10px auto;
+  margin: 14px auto;
   width: 72%;
 }
 
@@ -1315,7 +1333,7 @@ button {
 }
 
 .final-label {
-  margin-top: 8px;
+  margin-top: 12px;
   font-size: 11px;
   letter-spacing: 0.14em;
   color: rgba(26, 26, 26, 0.5);
@@ -1336,10 +1354,11 @@ button {
 }
 
 .final-small {
-  margin-top: 4px;
-  font-size: 12.5px;
+  margin-top: 3px;
+  font-size: 9.5px;
   font-style: italic;
-  color: rgba(26, 26, 26, 0.5);
+  color: rgba(26, 26, 26, 0.38);
+  letter-spacing: 0.02em;
 }
 
 .final-paidby {
@@ -1353,17 +1372,19 @@ button {
 
 
 .final-tnc {
-  margin-top: 8px;
-  text-align: center;
+  margin-top: 14px;
+  text-align: left;
+  border-top: 1px solid rgba(212, 175, 55, 0.28);
+  padding-top: 10px;
 }
 
 .final-tnc-heading {
-  font-size: 8.5px;
-  letter-spacing: 0.16em;
+  font-size: 8px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(26, 26, 26, 0.35);
+  color: rgba(26, 26, 26, 0.3);
   font-style: italic;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .final-tnc-list {
@@ -1371,16 +1392,25 @@ button {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   counter-reset: tnc;
 }
 
 .final-tnc-list li {
   counter-increment: tnc;
-  font-size: 8.5px;
-  line-height: 1.4;
-  color: rgba(26, 26, 26, 0.35);
+  font-size: 8px;
+  line-height: 1.5;
+  color: rgba(26, 26, 26, 0.3);
   font-style: italic;
+  padding-left: 12px;
+  position: relative;
+}
+
+.final-tnc-list li::before {
+  content: counter(tnc) '.';
+  position: absolute;
+  left: 0;
+  color: rgba(26, 26, 26, 0.22);
 }
 
 .copy-toast {
@@ -1402,10 +1432,13 @@ button {
   min-width: 220px;
 }
 
-/* final screen restart — same coral pill as all other CTAs */
+/* final screen restart — same coral pill, slightly smaller than main CTAs */
 .final-restart-btn {
   width: auto;
-  min-width: 220px;
+  min-width: 160px;
+  max-width: 220px;
+  padding: 12px 28px;
+  font-size: 15px;
 }
 
 .final-restart {

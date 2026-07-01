@@ -7,18 +7,21 @@ export default function RupeeBurst({ x, y, width = 260 }) {
   const notes = useMemo(() => (
     Array.from({ length: 48 }, (_, i) => {
       const spread = (Math.random() - 0.5) * width * 0.9
-      const rise   = -(60 + Math.random() * 120)  // upward arc
-      const fall   = 380 + Math.random() * 280     // fall past card
+      const rise   = -(50 + Math.random() * 90)
+      const fall   = 360 + Math.random() * 260
+      // note is wider than tall (real 500 note ~2.4:1 ratio)
+      const w = 28 + Math.random() * 16
       return {
         id: i,
         dx:       spread,
-        rise:     rise,
-        fall:     fall,
-        size:     26 + Math.random() * 18,
-        delay:    Math.random() * 0.35,
-        duration: 1.4 + Math.random() * 0.7,
-        spin:     (Math.random() - 0.5) * 540,
-        drift:    (Math.random() - 0.5) * 60,
+        rise,
+        fall,
+        w,
+        h:        Math.round(w / 2.4),
+        delay:    Math.random() * 0.4,
+        duration: 1.5 + Math.random() * 0.7,
+        spin:     (Math.random() - 0.5) * 480,
+        drift:    (Math.random() - 0.5) * 55,
       }
     })
   ), [])
@@ -35,8 +38,8 @@ export default function RupeeBurst({ x, y, width = 260 }) {
           alt=""
           style={{
             position: 'absolute',
-            width: n.size,
-            height: n.size,
+            width: n.w,
+            height: n.h,
             transform: 'translate(-50%, 0)',
             '--dx':    `${n.dx}px`,
             '--rise':  `${n.rise}px`,

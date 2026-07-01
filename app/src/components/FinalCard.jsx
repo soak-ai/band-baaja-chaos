@@ -178,18 +178,16 @@ export default function FinalCard({ picks, total, onRestart }) {
   const cardRef = useRef(null)
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      setCardVisible(true)
-      // fountain from top of card — measure after two frames so rect is accurate
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        if (cardRef.current) {
-          const r = cardRef.current.getBoundingClientRect()
-          setFountain({ x: r.left + r.width / 2, y: r.top, width: r.width })
-          setTimeout(() => setFountain(null), 3000)
-        }
-      }))
-    }, 600)
-    return () => clearTimeout(t)
+    const t = setTimeout(() => setCardVisible(true), 600)
+    // fountain: 1s after card lands
+    const f = setTimeout(() => {
+      if (cardRef.current) {
+        const r = cardRef.current.getBoundingClientRect()
+        setFountain({ x: r.left + r.width / 2, y: r.top, width: r.width })
+        setTimeout(() => setFountain(null), 3000)
+      }
+    }, 1600)
+    return () => { clearTimeout(t); clearTimeout(f) }
   }, [])
 
   const highlights = [

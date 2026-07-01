@@ -27,9 +27,9 @@ export default function Level3({ picks, onDone }) {
   return (
     <main className="screen level3">
       <p className="level3-eyebrow">
-        <img src="/assets/marigold-orange.png" className="eyebrow-flower" alt="" aria-hidden="true" />
+        <img src="/assets/marigold-yellow.png" className="eyebrow-flower" alt="" aria-hidden="true" />
         <span className="eyebrow-label">Shubh muhurat</span>
-        <img src="/assets/marigold-orange.png" className="eyebrow-flower" alt="" aria-hidden="true" />
+        <img src="/assets/marigold-yellow.png" className="eyebrow-flower" alt="" aria-hidden="true" />
       </p>
       <div className="level3-stage">
         {beat === 1 && (
