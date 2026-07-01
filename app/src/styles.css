@@ -1207,8 +1207,8 @@ button {
   height: 100%;
   object-fit: contain;
   display: block;
-  opacity: 0.3;
-  transform: rotate(-90deg);
+  opacity: 0.24;
+  transform: rotate(90deg);
 }
 
 /* card reveal animation */

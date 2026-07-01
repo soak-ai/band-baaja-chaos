@@ -29,7 +29,6 @@ export default function Level3({ picks, onDone }) {
       <p className="level3-eyebrow">
         <span className="eyebrow-label">Shubh muhurat</span>
       </p>
-      <img className="level3-flowers" src="/og-image-v2.png" alt="" aria-hidden="true" />
       <div className="level3-stage">
         {beat === 1 && (
           <h2 key="b1" className="beat">
