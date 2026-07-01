@@ -193,21 +193,6 @@ button {
   50%       { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
 }
 
-/* flat cream rectangle hides the lotus — sized to sit entirely behind the brandmark */
-.splash-lotus-cover {
-  position: absolute;
-  top: calc(62% - 8px);
-  left: 50%;
-  width: 20vw;
-  max-width: 82px;
-  height: 10vw;
-  max-height: 42px;
-  transform: translate(-50%, -50%);
-  background: #f0dfc0;
-  pointer-events: none;
-  z-index: 1;
-}
-
 /* three-flower brandmark on splash — multiply blends away the white PNG bg */
 .splash-brandmark {
   position: absolute;
@@ -1027,17 +1012,18 @@ button {
   animation: screen-in 0.5s ease both;
 }
 
-/* line 2 — snappy entrance with quick scale punch */
+/* line 2 — fast whoosh-in, settles quickly */
 .transition-line {
   font-size: 17px;
   font-weight: 500;
   color: rgba(26, 26, 26, 0.65);
-  animation: line2-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: line2-in 0.25s cubic-bezier(0, 0, 0.2, 1) both;
 }
 
 @keyframes line2-in {
-  from { opacity: 0; transform: scale(0.94); }
-  to   { opacity: 1; transform: scale(1); }
+  0%   { opacity: 0; transform: translateY(18px) scale(0.96); }
+  70%  { opacity: 1; transform: translateY(-2px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* line 1 fading out before line 2 appears */
@@ -1168,7 +1154,7 @@ button {
 }
 
 .ticker-bg-dim {
-  opacity: 0.12;
+  opacity: 0.4;
 }
 
 /* two columns side by side, centered, rotated as one unit — oversized so no
@@ -1237,16 +1223,16 @@ button {
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* L1→L2: line 2 pulses with a quick rush then fades */
+/* L1→L2: line 2 snaps out with a quick rush */
 .transition-line-launch {
-  animation: line2-pulse 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: line2-pulse 0.6s cubic-bezier(0, 0, 0.2, 1) forwards;
 }
 
 @keyframes line2-pulse {
-  0%   { transform: scale(1); opacity: 1; }
-  20%  { transform: scale(1.08); opacity: 1; }
-  50%  { transform: scale(1.02); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 0; }
+  0%   { transform: translateY(0) scale(1); opacity: 1; }
+  25%  { transform: translateY(-6px) scale(1.04); opacity: 1; }
+  50%  { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(8px) scale(0.97); opacity: 0; }
 }
 
 /* ---- final card: modern editorial ---- */

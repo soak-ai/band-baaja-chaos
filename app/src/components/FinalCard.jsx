@@ -172,15 +172,9 @@ async function generateCardBlob(total, verdict, highlights) {
 
 export default function FinalCard({ picks, total, onRestart }) {
   const [toast, setToast] = useState('')
-  const [tickerDim, setTickerDim] = useState(false)
-  const [cardVisible, setCardVisible] = useState(false)
+  const [tickerDim] = useState(true)
+  const [cardVisible] = useState(true)
   const cardRef = useRef(null)
-
-  useEffect(() => {
-    // ticker runs at 100% for 3.5s, then dims and card appears
-    const t1 = setTimeout(() => { setTickerDim(true); setCardVisible(true) }, 3500)
-    return () => clearTimeout(t1)
-  }, [])
 
   const highlights = [
     picks.venue?.insert,
