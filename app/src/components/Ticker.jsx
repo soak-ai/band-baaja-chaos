@@ -18,8 +18,8 @@ export default function Ticker({ picks, dim }) {
     return out
   }
 
-  const leftItems = repeat(images.left, 10)
-  const rightItems = repeat(images.right, 10)
+  const leftItems = repeat(images.left, 16)
+  const rightItems = repeat(images.right, 16)
 
   return (
     <div className={`ticker-bg${dim ? ' ticker-bg-dim' : ''}`} aria-hidden="true">
