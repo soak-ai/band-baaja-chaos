@@ -193,16 +193,17 @@ button {
   50%       { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
 }
 
-/* cream patch that sits between the bg and the brandmark to hide the lotus */
+/* flat cream rectangle hides the lotus — sized to sit entirely behind the brandmark */
 .splash-lotus-cover {
   position: absolute;
   top: calc(62% - 8px);
   left: 50%;
-  width: 28vw;
-  max-width: 110px;
-  aspect-ratio: 2 / 1;
+  width: 20vw;
+  max-width: 82px;
+  height: 10vw;
+  max-height: 42px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse, #f0dfc0 50%, transparent 75%);
+  background: #f0dfc0;
   pointer-events: none;
   z-index: 1;
 }
@@ -1026,16 +1027,16 @@ button {
   animation: screen-in 0.5s ease both;
 }
 
-/* line 2 — same style as line 1, bounces in with a little punch */
+/* line 2 — snappy entrance with quick scale punch */
 .transition-line {
   font-size: 17px;
   font-weight: 500;
   color: rgba(26, 26, 26, 0.65);
-  animation: line2-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: line2-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes line2-in {
-  from { opacity: 0; transform: scale(0.92); }
+  from { opacity: 0; transform: scale(0.94); }
   to   { opacity: 1; transform: scale(1); }
 }
 
@@ -1236,15 +1237,15 @@ button {
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* L1→L2: line 2 pulses subtly in place then fades out */
+/* L1→L2: line 2 pulses with a quick rush then fades */
 .transition-line-launch {
-  animation: line2-pulse 0.9s ease forwards;
+  animation: line2-pulse 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @keyframes line2-pulse {
   0%   { transform: scale(1); opacity: 1; }
-  30%  { transform: scale(1.07); opacity: 1; }
-  60%  { transform: scale(1.03); opacity: 0.85; }
+  20%  { transform: scale(1.08); opacity: 1; }
+  50%  { transform: scale(1.02); opacity: 0.8; }
   100% { transform: scale(1); opacity: 0; }
 }
 
