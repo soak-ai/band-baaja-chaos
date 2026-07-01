@@ -1202,7 +1202,7 @@ button {
   height: 82%;
   object-fit: contain;
   display: block;
-  opacity: 0.18;
+  opacity: 0.3;
   transform: rotate(90deg);
 }
 
