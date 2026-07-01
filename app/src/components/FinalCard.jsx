@@ -211,7 +211,7 @@ export default function FinalCard({ picks, total, onRestart }) {
 
   const share = async () => {
     const url = 'https://band-baaja-chaos.vercel.app/'
-    const text = `BBC is not liable for family drama, opinions, or baraat delays.\n\nplan yours → band-baaja-chaos.vercel.app`
+    const text = `BBC is not liable for family drama, opinions, or baraat delays. 🧡\n\nplan yours → https://band-baaja-chaos.vercel.app/`
 
     if (navigator.share && cardRef.current) {
       try {
