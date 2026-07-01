@@ -272,7 +272,7 @@ export default function FinalCard({ picks, total, onRestart }) {
             <hr className="gold-rule" />
             <p className="final-label">bill total</p>
             <p className="final-total">₹{formatINR(total)}</p>
-            <p className="final-small">a number best left unread,</p>
+            <p className="final-small">(a number best left unread)</p>
 
             <p className="final-paidby">
               paid by: <em>vibes</em>
