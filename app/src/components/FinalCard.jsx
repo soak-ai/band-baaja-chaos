@@ -211,7 +211,7 @@ export default function FinalCard({ picks, total, onRestart }) {
 
   const share = async () => {
     const url = 'https://band-baaja-chaos.vercel.app/'
-    const text = `It started as a harmless little wedding-planning fantasy.\n\nIt ended at *₹${formatINR(total)}*\n\nPaid by: vibes 🧡\n\nPlan yours: ${url}`
+    const text = `BBC is not liable for family drama, opinions, or baraat delays.\n\nplan yours → band-baaja-chaos.vercel.app`
 
     if (navigator.share && cardRef.current) {
       try {
@@ -284,7 +284,6 @@ export default function FinalCard({ picks, total, onRestart }) {
               <ol className="final-tnc-list">
                 <li>vendor confirmations via WA arrive between 3am and never.</li>
                 <li>caterer has the freedom to cancel last minute.</li>
-                <li>BBC is not liable for family drama, opinions, or baraat delays.</li>
               </ol>
             </div>
           </div>
