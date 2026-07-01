@@ -32,7 +32,7 @@ export default function Transition({ onDone }) {
       )}
       {(phase === 'line2' || phase === 'launching') && (
         <p className={`transition-line${phase === 'launching' ? ' transition-line-launch' : ''}`}>
-          shubh kaam mein deri kaisi?
+          shubh kaam mein deri kaisi<span className="transition-qmark">?</span>
         </p>
       )}
     </main>
