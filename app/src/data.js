@@ -116,7 +116,7 @@ export const ROWS = {
       { id: 'wildcard-typeface', name: 'typeface', img: 'wildcard-typeface', caption: 'yours only, perfectly kerned', price: T[5], tier: 'luxury' },
       { id: 'wildcard-island',   name: 'island',   img: 'wildcard-island',   caption: 'official escape, google maps catching up', price: T[5], tier: 'luxury' },
       { id: 'wildcard-spa',      name: 'spa',      img: 'wildcard-spa',      caption: 'every day feels like a sunday', price: T[5], tier: 'luxury' },
-      { id: 'wildcard-rolex',    name: 'rolex',    img: 'wildcard-rolex',    caption: 'arrived exactly on time, finally', price: T[5], tier: 'luxury' },
+      { id: 'wildcard-rolex',    name: 'rolex',    img: 'wildcard-rolex',    caption: 'gifted, because IST needed fixing', price: T[5], tier: 'luxury' },
     ],
   },
 }

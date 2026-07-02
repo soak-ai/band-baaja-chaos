@@ -14,9 +14,8 @@ export default function Transition({ onDone }) {
       setTimeout(() => setPhase('line2'),     1500),
       // line2 tinkering: 0.3s fade + 0.4s stutter = done at ~2.2s
       // then rests on screen for ~1.5s before fading out
-      setTimeout(() => setPhase('launching'), 3800),
-      setTimeout(() => setPhase('leaving'),   4200),
-      setTimeout(onDone,                      4500),
+      setTimeout(() => setPhase('launching'), 3600),
+      setTimeout(onDone,                      4200),
     ]
     return () => timers.forEach(clearTimeout)
   }, [onDone])
@@ -31,8 +30,8 @@ export default function Transition({ onDone }) {
         </p>
       )}
       {(phase === 'line2' || phase === 'launching') && (
-        <p className={`transition-line${phase === 'launching' ? ' transition-line-launch' : ''}`}>
-          shubh kaam mein deri kaisi<span className="transition-qmark">?</span>
+        <p className="transition-line">
+          shubh kaam mein deri kaisi<span className={`transition-qmark${phase === 'launching' ? ' transition-qmark-flutter' : ''}`}>?</span>
         </p>
       )}
     </main>
